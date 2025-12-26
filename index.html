@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purwanchal Cafe | Where Flavors Meet Comfort</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2691E;
+            --accent: #FFD700;
+            --dark: #2C1810;
+            --light: #FFF8F0;
+            --text: #333333;
+            --success: #27ae60;
+            --shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Scale Animation for Icons */
+        @keyframes iconScale {
+            0%, 100% { 
+                transform: scale(1); 
+            }
+            50% { 
+                transform: scale(1.2); 
+            }
+        }
+
+        @keyframes shine {
+            0% { background-position: -100px; }
+            100% { background-position: 200px; }
+        }
+
+        @keyframes badgeShine {
+            0%, 100% { 
+                box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+                transform: translateY(0);
+            }
+            50% { 
+                box-shadow: 0 5px 20px rgba(39, 174, 96, 0.6);
+                transform: translateY(-2px);
+            }
+        }
+
+        @keyframes tagPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: none;
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 3px 10px rgba(210, 105, 30, 0.2);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Scroll Animation Classes */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(255, 248, 240, 0.98) 0%, rgba(255, 248, 240, 0.95) 100%);
+            padding: 18px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            transition: var(--transition);
+            border-bottom: 2px solid rgba(139, 69, 19, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        header.hidden {
+            transform: translateY(-100%);
+        }
+
+        header.visible {
+            transform: translateY(0);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--accent);
+            animation: iconScale 3s ease-in-out infinite;
+        }
+
+        .logo:hover i {
+            animation: iconScale 1s ease-in-out infinite;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .nav-links a:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.4s;
+        }
+
+        .nav-links a:hover:before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 26px;
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(139, 69, 19, 0.1);
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: 
+                linear-gradient(45deg, rgba(44, 24, 16, 0.9) 0%, rgba(44, 24, 16, 0.7) 100%),
+                url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 140px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+            animation: slideInLeft 1s ease-out 0.3s both;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            position: relative;
+        }
+
+        .hero-tagline {
+            font-size: 1.6rem;
+            margin-bottom: 45px;
+            opacity: 0.95;
+            max-width: 650px;
+            line-height: 1.8;
+            animation: slideInRight 1s ease-out 0.6s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            min-width: 200px;
+            position: relative;
+        }
+
+        /* Shine Effect for Explore Menu Button */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+        }
+
+        .btn-primary:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            animation: shine 1s ease-out;
+        }
+
+        /* Shine Effect for Order Now Button */
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--accent);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 215, 0, 0.2), 
+                transparent);
+            animation: shine 1s ease-out;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.4);
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 120px 0;
+            background: linear-gradient(to bottom, var(--light) 0%, #fff 100%);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title h2 {
+            font-size: 3.2rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        /* Categories - FIXED */
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .category-btn {
+            padding: 14px 28px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .category-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.2);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
+        }
+
+        /* Menu Grid - IMPROVED FOR MOBILE RESPONSIVENESS */
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Mobile optimization - Show 3 items on medium tablets, 2 on phones */
+        @media (max-width: 1024px) {
+            .menu-items {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-items {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .menu-items {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-items {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            /* Adjust menu items for better mobile display */
+            .menu-item-img-container {
+                height: 130px;
+            }
+            
+            .menu-item-content {
+                padding: 12px;
+            }
+            
+            .menu-item-title {
+                font-size: 1rem;
+            }
+            
+            .menu-item-price {
+                font-size: 1.1rem;
+                padding: 5px 10px;
+            }
+            
+            .menu-item-desc {
+                font-size: 0.8rem;
+                margin-bottom: 12px;
+            }
+            
+            .menu-item-button {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            
+            .menu-item-tags {
+                gap: 5px;
+                margin-bottom: 12px;
+            }
+            
+            .menu-tag {
+                font-size: 0.7rem;
+                padding: 3px 8px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Menu Cards */
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+        }
+
+        .menu-item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .menu-item:hover .menu-item-img {
+            transform: scale(1.1);
+        }
+
+        .menu-item-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--success);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+            z-index: 10;
+        }
+
+        .menu-item:hover .menu-item-badge {
+            animation: badgeShine 0.8s ease-out;
+        }
+
+        .menu-item-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .menu-item-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 700;
+            line-height: 1.3;
+            flex: 1;
+        }
+
+        .menu-item-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(255, 215, 0, 0.1));
+            padding: 6px 14px;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .menu-item:hover .menu-item-price {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .menu-item-desc {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .menu-item-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .menu-tag {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(210, 105, 30, 0.1));
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .menu-tag:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+            animation: tagPulse 0.5s ease-out;
+        }
+
+        /* Shine Effect for Add to Order Button */
+        .menu-item-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item-button:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: shine 1s ease-out;
+        }
+
+        .menu-item-button:hover {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(139, 69, 19, 0.3);
+        }
+
+        /* Order Section */
+        .order-section {
+            background: linear-gradient(135deg, #f9f5f0 0%, #fff8f0 100%);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .order-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(139, 69, 19, 0.1);
+        }
+
+        .order-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(139, 69, 19, 0.15);
+        }
+
+        .order-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .order-card h3 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Scale Animation for Location, Phone, and Clock Icons */
+        .order-card h3 i {
+            color: var(--accent);
+            background: rgba(139, 69, 19, 0.1);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            animation: iconScale 3s ease-in-out infinite;
+        }
+
+        .order-card:hover h3 i {
+            animation: iconScale 1.5s ease-in-out infinite;
+        }
+
+        .info-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: var(--transition);
+        }
+
+        .info-item:hover {
+            transform: translateX(8px);
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(255, 215, 0, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .info-item:hover .info-icon {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .info-content h4 {
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .info-content p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .hours-card {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+        }
+
+        .hours-card:before {
+            background: linear-gradient(to bottom, var(--accent), var(--secondary));
+        }
+
+        .hours-card h3 {
+            color: white;
+        }
+
+        .hours-card .info-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .hours-card .info-content h4 {
+            color: white;
+        }
+
+        .hours-card .info-content p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* CTA Button */
+        .button-container {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        /* Shine Effect for Call Now Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 18px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: pulse 3s infinite;
+        }
+
+        .cta-button:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent);
+            animation: shine 1s ease-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(139, 69, 19, 0.4);
+            animation: none;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a0f0a 100%);
+            color: white;
+            padding: 60px 0 25px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo i {
+            color: var(--accent);
+            animation: iconScale 3s ease-in-out infinite;
+        }
+
+        .footer-about p {
+            opacity: 0.85;
+            margin-bottom: 25px;
+            max-width: 300px;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .footer-section h4:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateX(8px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background: white;
+                padding: 25px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+                transition: var(--transition);
+                z-index: 999;
+                gap: 18px;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.1rem;
+                padding: 10px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+                padding: 16px 30px;
+                min-width: auto;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .menu-categories {
+                gap: 8px;
+                margin-bottom: 35px;
+            }
+            
+            .category-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            
+            .order-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .order-card {
+                padding: 25px;
+            }
+            
+            .cta-button {
+                padding: 16px 35px;
+                font-size: 1rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title p {
+                font-size: 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 12px 30px rgba(39, 174, 96, 0.3);
+            z-index: 9999;
+            transform: translateX(150%);
+            transition: transform 0.6s;
+        }
+        
+        @media (max-width: 768px) {
+            .notification {
+                top: 20px;
+                right: 20px;
+                left: 20px;
+                transform: translateY(-150%);
+            }
+            
+            .notification.active {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="container nav-container">
+            <a href="#home" class="logo">
+                <i class="fas fa-mug-hot"></i>Purwanchal<span>Cafe</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Food Menu</a></li>
+                <li><a href="#order">Order Now</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Purwanchal <span>Cafe</span></h1>
+                <p class="hero-tagline">
+                    Where flavors meet comfort. Experience the perfect blend of traditional taste and modern ambiance in the heart of Itahari, Sunsari.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn btn-primary">
+                        <i class="fas fa-utensils"></i> Explore Menu
+                    </a>
+                    <a href="#order" class="btn btn-secondary">
+                        <i class="fas fa-shopping-cart"></i> Order Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Food Menu Section -->
+    <section class="menu-section" id="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Food Menu</h2>
+                <p>Delicious traditional recipes with a modern touch</p>
+            </div>
+            
+            <div class="menu-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="breakfast">Breakfast</button>
+                <button class="category-btn" data-category="lunch">Lunch</button>
+                <button class="category-btn" data-category="snacks">Snacks</button>
+                <button class="category-btn" data-category="drinks">Drinks</button>
+                <button class="category-btn" data-category="dessert">Dessert</button>
+            </div>
+            
+            <div class="menu-items" id="menuItemsContainer">
+                <!-- Menu items will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Now Section -->
+    <section class="order-section" id="order">
+        <div class="container">
+            <div class="section-title">
+                <h2>Order Now</h2>
+                <p>Visit us or get in touch to place your order</p>
+            </div>
+            
+            <div class="order-container">
+                <div class="order-card scroll-fade">
+                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-location-dot"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Antidiene, Itahari</h4>
+                            <p>Sunsari: 0.000</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-directions"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Easy to Find</h4>
+                            <p>Near main bus park, opposite to City Mall</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-parking"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Parking Available</h4>
+                            <p>Free parking for our customers</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-card scroll-fade">
+                    <h3><i class="fas fa-phone"></i> Contact</h3>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-volume"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Phone Numbers</h4>
+                            <p>025-582888</p>
+                            <p>+971 289-3665354</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Email Address</h4>
+                            <p>order@purwanchalcafe.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>WhatsApp Order</h4>
+                            <p>+977 980-1234567</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-card hours-card scroll-fade">
+                    <h3><i class="fas fa-clock"></i> Opening Hours</h3>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Open Daily</h4>
+                            <p>8:00 AM - 10:00 PM</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Breakfast</h4>
+                            <p>8:00 AM - 11:00 AM</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Dinner Special</h4>
+                            <p>6:00 PM - 10:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <a href="tel:025582888" class="cta-button scroll-fade">
+                    <i class="fas fa-phone"></i> Call Now to Order
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about scroll-fade">
+                    <div class="footer-logo">
+                        <i class="fas fa-mug-hot"></i>Purwanchal Cafe
+                    </div>
+                    <p>Where flavors meet comfort. Experience the perfect blend of traditional taste and modern ambiance in the heart of Itahari.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section scroll-fade">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#menu"><i class="fas fa-chevron-right"></i> Food Menu</a></li>
+                        <li><a href="#order"><i class="fas fa-chevron-right"></i> Order Now</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section scroll-fade">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-location-dot"></i> Antidiene, Itahari, Sunsari</a></li>
+                        <li><a href="tel:025582888"><i class="fas fa-phone"></i> 025-582888</a></li>
+                        <li><a href="tel:+9712893665354"><i class="fas fa-phone"></i> +971 289-3665354</a></li>
+                        <li><a href="mailto:info@purwanchalcafe.com"><i class="fas fa-envelope"></i> info@purwanchalcafe.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright scroll-fade">
+                <p>&copy; 2023 Purwanchal Cafe. All Rights Reserved. | Crafted with <i class="fas fa-heart" style="color: #ff6b6b;"></i> in Itahari</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Menu Data with UNIQUE images for ALL dishes
+        const menuData = [
+            {
+                id: 1,
+                name: "Traditional Breakfast",
+                price: "Rs 450",
+                description: "Sel roti, achar, boiled eggs and masala tea.",
+                category: "breakfast",
+                tags: ["Popular", "Vegetarian"],
+                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&auto=format&fit=crop&q=80",
+                badge: "Morning Special"
+            },
+            {
+                id: 2,
+                name: "Momo Platter",
+                price: "Rs 550",
+                description: "Steamed dumplings with spicy tomato chutney.",
+                category: "lunch",
+                tags: ["Best Seller", "Spicy"],
+                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&auto=format&fit=crop&q=80",
+                badge: "Hot"
+            },
+            {
+                id: 3,
+                name: "Thakali Thali",
+                price: "Rs 650",
+                description: "Traditional Nepali meal with rice, lentils and curry.",
+                category: "lunch",
+                tags: ["Traditional", "Complete"],
+                image: "https://images.unsplash.com/photo-1585937421612-70ca003675ed?w=400&auto=format&fit=crop&q=80",
+                badge: "Traditional"
+            },
+            {
+                id: 4,
+                name: "Chicken Sekuwa",
+                price: "Rs 680",
+                description: "Grilled chicken with traditional spices.",
+                category: "snacks",
+                tags: ["Spicy", "Non-Veg"],
+                image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&auto=format&fit=crop&q=80",
+                badge: "Grilled"
+            },
+            {
+                id: 5,
+                name: "Masala Chai",
+                price: "Rs 120",
+                description: "Traditional spiced tea with milk.",
+                category: "drinks",
+                tags: ["Hot", "Traditional"],
+                image: "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=400&auto=format&fit=crop&q=80",
+                badge: "Hot"
+            },
+            {
+                id: 6,
+                name: "Special Coffee",
+                price: "Rs 180",
+                description: "Signature blend with cardamom and cinnamon.",
+                category: "drinks",
+                tags: ["Signature", "Hot"],
+                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&auto=format&fit=crop&q=80",
+                badge: "Signature"
+            },
+            {
+                id: 7,
+                name: "Juju Dhau",
+                price: "Rs 220",
+                description: "Traditional sweet curd from Bhaktapur.",
+                category: "dessert",
+                tags: ["Sweet", "Traditional"],
+                image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&auto=format&fit=crop&q=80",
+                badge: "Sweet"
+            },
+            {
+                id: 8,
+                name: "Mango Lassi",
+                price: "Rs 200",
+                description: "Creamy yogurt drink with fresh mango.",
+                category: "drinks",
+                tags: ["Cold", "Refreshing"],
+                image: "https://images.unsplash.com/photo-1565962652551-4fe3b8e8c6c0?w=400&auto=format&fit=crop&q=80",
+                badge: "Refreshing"
+            },
+            {
+                id: 9,
+                name: "Veg Chow Mein",
+                price: "Rs 420",
+                description: "Stir-fried noodles with fresh vegetables.",
+                category: "lunch",
+                tags: ["Vegetarian", "Quick"],
+                image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&auto=format&fit=crop&q=80",
+                badge: "Quick"
+            },
+            {
+                id: 10,
+                name: "Vegetable Pakoda",
+                price: "Rs 320",
+                description: "Crispy vegetable fritters with mint chutney.",
+                category: "snacks",
+                tags: ["Crispy", "Vegetarian"],
+                image: "https://images.unsplash.com/photo-1633613286991-611fe299c4be?w=400&auto=format&fit=crop&q=80",
+                badge: "Crispy"
+            },
+            {
+                id: 11,
+                name: "Ice Cream Sundae",
+                price: "Rs 280",
+                description: "Vanilla ice cream with chocolate and nuts.",
+                category: "dessert",
+                tags: ["Sweet", "Cold"],
+                image: "https://images.unsplash.com/photo-1566566717285-2b3d42b9e4c7?w=400&auto=format&fit=crop&q=80",
+                badge: "Cold"
+            },
+            {
+                id: 12,
+                name: "Fresh Fruit Juice",
+                price: "Rs 180",
+                description: "Seasonal fresh fruit juice.",
+                category: "drinks",
+                tags: ["Fresh", "Healthy"],
+                image: "https://images.unsplash.com/photo-1629361726420-629e6ba67c1f?w=400&auto=format&fit=crop&q=80",
+                badge: "Fresh"
+            },
+            {
+                id: 13,
+                name: "Paneer Tikka",
+                price: "Rs 520",
+                description: "Grilled cottage cheese with spices.",
+                category: "snacks",
+                tags: ["Vegetarian", "Grilled"],
+                image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&auto=format&fit=crop&q=80",
+                badge: "Vegetarian"
+            },
+            {
+                id: 14,
+                name: "Cold Coffee",
+                price: "Rs 220",
+                description: "Iced coffee with cream and chocolate.",
+                category: "drinks",
+                tags: ["Cold", "Creamy"],
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&auto=format&fit=crop&q=80",
+                badge: "Chilled"
+            },
+            {
+                id: 15,
+                name: "Gulab Jamun",
+                price: "Rs 180",
+                description: "Sweet milk balls in rose syrup.",
+                category: "dessert",
+                tags: ["Sweet", "Traditional"],
+                image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&auto=format&fit=crop&q=80",
+                badge: "Sweet"
+            },
+            {
+                id: 16,
+                name: "Chicken Biryani",
+                price: "Rs 580",
+                description: "Fragrant rice with chicken and spices.",
+                category: "lunch",
+                tags: ["Spicy", "Non-Veg"],
+                image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&auto=format&fit=crop&q=80",
+                badge: "Spicy"
+            },
+            {
+                id: 17,
+                name: "Aloo Paratha",
+                price: "Rs 350",
+                description: "Stuffed potato bread with yogurt.",
+                category: "breakfast",
+                tags: ["Vegetarian", "Hearty"],
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&auto=format&fit=crop&q=80",
+                badge: "Hearty"
+            },
+            {
+                id: 18,
+                name: "Samosa",
+                price: "Rs 250",
+                description: "Crispy pastry with spiced potatoes.",
+                category: "snacks",
+                tags: ["Crispy", "Vegetarian"],
+                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop&q=80",
+                badge: "Crispy"
+            },
+            {
+                id: 19,
+                name: "Butter Chicken",
+                price: "Rs 720",
+                description: "Creamy tomato curry with chicken.",
+                category: "lunch",
+                tags: ["Creamy", "Non-Veg"],
+                image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&auto=format&fit=crop&q=80",
+                badge: "Creamy"
+            },
+            {
+                id: 20,
+                name: "Fresh Lemonade",
+                price: "Rs 150",
+                description: "Freshly squeezed lemon with mint.",
+                category: "drinks",
+                tags: ["Refreshing", "Fresh"],
+                image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&auto=format&fit=crop&q=80",
+                badge: "Fresh"
+            }
+        ];
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItemsContainer = document.getElementById('menuItemsContainer');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            // Function to render menu items
+            function renderMenuItems(category = 'all') {
+                menuItemsContainer.innerHTML = '';
+                
+                // Filter items based on category
+                let itemsToShow = menuData;
+                if (category !== 'all') {
+                    itemsToShow = menuData.filter(item => item.category === category);
+                }
+                
+                // Show message if no items
+                if (itemsToShow.length === 0) {
+                    menuItemsContainer.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                            <h3 style="color: var(--primary); margin-bottom: 10px;">No items found in this category</h3>
+                            <p style="color: #666;">Please check back later or try another category.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Create HTML for each menu item with scroll animation
+                itemsToShow.forEach((item, index) => {
+                    const menuItem = document.createElement('div');
+                    menuItem.className = 'menu-item scroll-fade';
+                    menuItem.style.animationDelay = `${index * 0.1}s`;
+                    
+                    menuItem.innerHTML = `
+                        <div class="menu-item-img-container">
+                            <img src="${item.image}" alt="${item.name}" class="menu-item-img" loading="lazy">
+                            ${item.badge ? `<div class="menu-item-badge">${item.badge}</div>` : ''}
+                        </div>
+                        <div class="menu-item-content">
+                            <div class="menu-item-header">
+                                <h3 class="menu-item-title">${item.name}</h3>
+                                <span class="menu-item-price">${item.price}</span>
+                            </div>
+                            <p class="menu-item-desc">${item.description}</p>
+                            <div class="menu-item-tags">
+                                ${item.tags.map(tag => `<span class="menu-tag">${tag}</span>`).join('')}
+                            </div>
+                            <button class="menu-item-button" data-id="${item.id}">
+                                <i class="fas fa-shopping-cart"></i> Add to Order
+                            </button>
+                        </div>
+                    `;
+                    
+                    menuItemsContainer.appendChild(menuItem);
+                    
+                    // Add scroll animation to this item
+                    setTimeout(() => {
+                        const observer = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add('visible');
+                                }
+                            });
+                        }, { threshold: 0.1 });
+                        
+                        observer.observe(menuItem);
+                    }, 100);
+                });
+                
+                // Add event listeners to order buttons
+                document.querySelectorAll('.menu-item-button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const itemId = this.getAttribute('data-id');
+                        const item = menuData.find(i => i.id == itemId);
+                        
+                        // Button animation
+                        this.style.transform = 'scale(0.95)';
+                        this.innerHTML = '<i class="fas fa-check"></i> Added!';
+                        this.style.background = 'var(--success)';
+                        
+                        setTimeout(() => {
+                            this.style.transform = '';
+                            this.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Order';
+                            this.style.background = '';
+                        }, 1500);
+                        
+                        // Show notification
+                        showNotification(`${item.name} added to order!`);
+                    });
+                });
+            }
+            
+            // Initial render
+            renderMenuItems();
+            
+            // Add event listeners to category buttons
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get category from data attribute
+                    const category = this.getAttribute('data-category');
+                    
+                    // Render items for this category
+                    renderMenuItems(category);
+                });
+            });
+            
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+                
+                // Close mobile menu when clicking on a link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                    });
+                });
+            }
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Close mobile menu if open
+                        if (navLinks && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                            mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                        }
+                        
+                        const headerHeight = document.querySelector('header').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Header hide/show on scroll
+            let lastScrollTop = 0;
+            const header = document.getElementById('mainHeader');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('hidden');
+                    header.classList.remove('visible');
+                } else {
+                    header.classList.remove('hidden');
+                    header.classList.add('visible');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+            
+            // Scroll animation observer
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            // Observe all elements with scroll-fade class
+            document.querySelectorAll('.scroll-fade').forEach(el => {
+                scrollObserver.observe(el);
+            });
+            
+            // Notification function
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'notification';
+                notification.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Show notification
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                    if (window.innerWidth <= 768) {
+                        notification.style.transform = 'translateY(0)';
+                    }
+                }, 10);
+                
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(150%)';
+                    if (window.innerWidth <= 768) {
+                        notification.style.transform = 'translateY(-150%)';
+                    }
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 600);
+                }, 3000);
+            }
+            
+            // Handle image loading errors
+            document.querySelectorAll('.menu-item-img').forEach(img => {
+                img.addEventListener('error', function() {
+                    this.src = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&auto=format&fit=crop&q=80';
+                    this.alt = 'Delicious Food';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
