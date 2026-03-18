@@ -1,1814 +1,1391 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purwanchal Cafe | Where Flavors Meet Comfort</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Reset & Base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #8B4513;
-            --secondary: #D2691E;
-            --accent: #FFD700;
-            --dark: #2C1810;
-            --light: #FFF8F0;
-            --text: #333333;
-            --success: #27ae60;
-            --shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Scale Animation for Icons */
-        @keyframes iconScale {
-            0%, 100% { 
-                transform: scale(1); 
-            }
-            50% { 
-                transform: scale(1.2); 
-            }
-        }
-
-        @keyframes shine {
-            0% { background-position: -100px; }
-            100% { background-position: 200px; }
-        }
-
-        @keyframes badgeShine {
-            0%, 100% { 
-                box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
-                transform: translateY(0);
-            }
-            50% { 
-                box-shadow: 0 5px 20px rgba(39, 174, 96, 0.6);
-                transform: translateY(-2px);
-            }
-        }
-
-        @keyframes tagPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: none;
-            }
-            50% { 
-                transform: scale(1.05);
-                box-shadow: 0 3px 10px rgba(210, 105, 30, 0.2);
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--text);
-            background-color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* Scroll Animation Classes */
-        .scroll-fade {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .scroll-fade.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, rgba(255, 248, 240, 0.98) 0%, rgba(255, 248, 240, 0.95) 100%);
-            padding: 18px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(15px);
-            transition: var(--transition);
-            border-bottom: 2px solid rgba(139, 69, 19, 0.15);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        header.hidden {
-            transform: translateY(-100%);
-        }
-
-        header.visible {
-            transform: translateY(0);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo i {
-            color: var(--accent);
-            animation: iconScale 3s ease-in-out infinite;
-        }
-
-        .logo:hover i {
-            animation: iconScale 1s ease-in-out infinite;
-        }
-
-        .logo span {
-            color: var(--secondary);
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 35px;
-        }
-
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 600;
-            font-size: 16px;
-            transition: var(--transition);
-            padding: 8px 0;
-            position: relative;
-        }
-
-        .nav-links a:before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 3px;
-            transition: width 0.4s;
-        }
-
-        .nav-links a:hover:before {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            font-size: 26px;
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            transition: var(--transition);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(139, 69, 19, 0.1);
-        }
-
-        .mobile-menu-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            background: 
-                linear-gradient(45deg, rgba(44, 24, 16, 0.9) 0%, rgba(44, 24, 16, 0.7) 100%),
-                url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding: 140px 0 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 850px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: 5rem;
-            margin-bottom: 25px;
-            line-height: 1.1;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
-            animation: slideInLeft 1s ease-out 0.3s both;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-            position: relative;
-        }
-
-        .hero-tagline {
-            font-size: 1.6rem;
-            margin-bottom: 45px;
-            opacity: 0.95;
-            max-width: 650px;
-            line-height: 1.8;
-            animation: slideInRight 1s ease-out 0.6s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            animation: fadeInUp 1s ease-out 0.9s both;
-        }
-
-        .btn {
-            padding: 18px 40px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
-            min-width: 200px;
-            position: relative;
-        }
-
-        /* Shine Effect for Explore Menu Button */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
-        }
-
-        .btn-primary:hover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.2), 
-                transparent);
-            animation: shine 1s ease-out;
-        }
-
-        /* Shine Effect for Order Now Button */
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--accent);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-secondary:hover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 215, 0, 0.2), 
-                transparent);
-            animation: shine 1s ease-out;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.4);
-        }
-
-        /* Menu Section */
-        .menu-section {
-            padding: 120px 0;
-            background: linear-gradient(to bottom, var(--light) 0%, #fff 100%);
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 70px;
-        }
-
-        .section-title h2 {
-            font-size: 3.2rem;
-            color: var(--dark);
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 5px;
-            animation: pulse 2s infinite;
-        }
-
-        .section-title p {
-            color: #666;
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
-
-        /* Categories - FIXED */
-        .menu-categories {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 60px;
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-
-        .category-btn {
-            padding: 14px 28px;
-            background: white;
-            border: 2px solid var(--primary);
-            border-radius: 50px;
-            font-weight: 600;
-            color: var(--primary);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-            white-space: nowrap;
-        }
-
-        .category-btn:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.2);
-        }
-
-        .category-btn.active {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(139, 69, 19, 0.3);
-        }
-
-        /* Menu Grid - IMPROVED FOR MOBILE RESPONSIVENESS */
-        .menu-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        /* Mobile optimization - Show 3 items on medium tablets, 2 on phones */
-        @media (max-width: 1024px) {
-            .menu-items {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .menu-items {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .menu-items {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .menu-items {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            
-            /* Adjust menu items for better mobile display */
-            .menu-item-img-container {
-                height: 130px;
-            }
-            
-            .menu-item-content {
-                padding: 12px;
-            }
-            
-            .menu-item-title {
-                font-size: 1rem;
-            }
-            
-            .menu-item-price {
-                font-size: 1.1rem;
-                padding: 5px 10px;
-            }
-            
-            .menu-item-desc {
-                font-size: 0.8rem;
-                margin-bottom: 12px;
-            }
-            
-            .menu-item-button {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-            
-            .menu-item-tags {
-                gap: 5px;
-                margin-bottom: 12px;
-            }
-            
-            .menu-tag {
-                font-size: 0.7rem;
-                padding: 3px 8px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .menu-items {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Menu Cards */
-        .menu-item {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .menu-item-img-container {
-            position: relative;
-            overflow: hidden;
-            height: 180px;
-        }
-
-        .menu-item-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .menu-item:hover .menu-item-img {
-            transform: scale(1.1);
-        }
-
-        .menu-item-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--success);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
-            z-index: 10;
-        }
-
-        .menu-item:hover .menu-item-badge {
-            animation: badgeShine 0.8s ease-out;
-        }
-
-        .menu-item-content {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            background: white;
-        }
-
-        .menu-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .menu-item-title {
-            font-size: 1.2rem;
-            color: var(--dark);
-            font-weight: 700;
-            line-height: 1.3;
-            flex: 1;
-        }
-
-        .menu-item-price {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary);
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(255, 215, 0, 0.1));
-            padding: 6px 14px;
-            border-radius: 12px;
-            transition: var(--transition);
-        }
-
-        .menu-item:hover .menu-item-price {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .menu-item-desc {
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.5;
-            font-size: 0.9rem;
-            flex-grow: 1;
-        }
-
-        .menu-item-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 15px;
-        }
-
-        .menu-tag {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(210, 105, 30, 0.1));
-            color: var(--secondary);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            transition: var(--transition);
-        }
-
-        .menu-tag:hover {
-            background: var(--secondary);
-            color: white;
-            transform: translateY(-2px);
-            animation: tagPulse 0.5s ease-out;
-        }
-
-        /* Shine Effect for Add to Order Button */
-        .menu-item-button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-item-button:hover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.3), 
-                transparent);
-            animation: shine 1s ease-out;
-        }
-
-        .menu-item-button:hover {
-            background: linear-gradient(135deg, var(--dark), var(--primary));
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(139, 69, 19, 0.3);
-        }
-
-        /* Order Section */
-        .order-section {
-            background: linear-gradient(135deg, #f9f5f0 0%, #fff8f0 100%);
-            padding: 120px 0;
-            position: relative;
-        }
-
-        .order-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .order-card {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(139, 69, 19, 0.1);
-        }
-
-        .order-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(139, 69, 19, 0.15);
-        }
-
-        .order-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--accent));
-        }
-
-        .order-card h3 {
-            font-size: 1.6rem;
-            color: var(--primary);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* Scale Animation for Location, Phone, and Clock Icons */
-        .order-card h3 i {
-            color: var(--accent);
-            background: rgba(139, 69, 19, 0.1);
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            animation: iconScale 3s ease-in-out infinite;
-        }
-
-        .order-card:hover h3 i {
-            animation: iconScale 1.5s ease-in-out infinite;
-        }
-
-        .info-item {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            transition: var(--transition);
-        }
-
-        .info-item:hover {
-            transform: translateX(8px);
-        }
-
-        .info-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(255, 215, 0, 0.1));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 16px;
-            flex-shrink: 0;
-            transition: var(--transition);
-        }
-
-        .info-item:hover .info-icon {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .info-content h4 {
-            font-size: 1rem;
-            color: var(--dark);
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .info-content p {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .hours-card {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-        }
-
-        .hours-card:before {
-            background: linear-gradient(to bottom, var(--accent), var(--secondary));
-        }
-
-        .hours-card h3 {
-            color: white;
-        }
-
-        .hours-card .info-icon {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .hours-card .info-content h4 {
-            color: white;
-        }
-
-        .hours-card .info-content p {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* CTA Button */
-        .button-container {
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        /* Shine Effect for Call Now Button */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 18px 45px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: var(--transition);
-            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: pulse 3s infinite;
-        }
-
-        .cta-button:hover::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.3), 
-                transparent);
-            animation: shine 1s ease-out;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(139, 69, 19, 0.4);
-            animation: none;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--dark) 0%, #1a0f0a 100%);
-            color: white;
-            padding: 60px 0 25px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-logo i {
-            color: var(--accent);
-            animation: iconScale 3s ease-in-out infinite;
-        }
-
-        .footer-about p {
-            opacity: 0.85;
-            margin-bottom: 25px;
-            max-width: 300px;
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .social-icons a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .social-icons a:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        .footer-section h4 {
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 12px;
-        }
-
-        .footer-section h4:after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 3px;
-            background: var(--accent);
-            bottom: 0;
-            left: 0;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-            transform: translateX(8px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            opacity: 0.7;
-            font-size: 0.85rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 3.5rem;
-            }
-            
-            .hero-tagline {
-                font-size: 1.3rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                flex-direction: column;
-                background: white;
-                padding: 25px;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-                transition: var(--transition);
-                z-index: 999;
-                gap: 18px;
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links a {
-                font-size: 1.1rem;
-                padding: 10px 0;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-tagline {
-                font-size: 1.1rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-                padding: 16px 30px;
-                min-width: auto;
-            }
-            
-            .section-title h2 {
-                font-size: 2.2rem;
-            }
-            
-            .menu-categories {
-                gap: 8px;
-                margin-bottom: 35px;
-            }
-            
-            .category-btn {
-                padding: 10px 18px;
-                font-size: 0.9rem;
-            }
-            
-            .order-container {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .order-card {
-                padding: 25px;
-            }
-            
-            .cta-button {
-                padding: 16px 35px;
-                font-size: 1rem;
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero-tagline {
-                font-size: 1rem;
-            }
-            
-            .section-title h2 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title p {
-                font-size: 1rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            background: var(--success);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 12px 30px rgba(39, 174, 96, 0.3);
-            z-index: 9999;
-            transform: translateX(150%);
-            transition: transform 0.6s;
-        }
-        
-        @media (max-width: 768px) {
-            .notification {
-                top: 20px;
-                right: 20px;
-                left: 20px;
-                transform: translateY(-150%);
-            }
-            
-            .notification.active {
-                transform: translateY(0);
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header id="mainHeader">
-        <div class="container nav-container">
-            <a href="#home" class="logo">
-                <i class="fas fa-mug-hot"></i>Purwanchal<span>Cafe</span>
-            </a>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#menu">Food Menu</a></li>
-                <li><a href="#order">Order Now</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+import { useState, useEffect } from "react";
+
+const css = `
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --rose:#f2a7c3;--rose-light:#fce8f0;--rose-pale:#fdf4f8;
+  --gold:#c9a55a;--gold-light:#e8d5a3;--cream:#faf6f0;
+  --warm-white:#fffcf9;--nude:#e8d5c4;--text-dark:#1a1014;
+  --text-mid:#4a3040;--text-soft:#8a6070;--text-muted:#b89aaa;
+  --border:#eddde6;--shadow:rgba(180,120,150,0.12);--shadow-md:rgba(180,120,150,0.2);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--text-dark);overflow-x:hidden;}
+.shine-root{font-family:'DM Sans',sans-serif;background:var(--warm-white);color:var(--text-dark);min-height:100vh;overflow-x:hidden;}
+.shine-root.dark{--warm-white:#18100f;--cream:#211418;--text-dark:#f5ede9;--text-mid:#d4b8c0;--text-soft:#a08090;--text-muted:#6a5060;--border:#3a2830;--rose-pale:#2a1820;--rose-light:#3a1e2a;background:#18100f;}
+
+/* LOADER */
+.loader-wrap{position:fixed;inset:0;z-index:9999;background:var(--warm-white);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease,visibility 0.8s ease;}
+.loader-wrap.out{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-logo{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--text-dark);letter-spacing:0.06em;margin-bottom:0.3rem;}
+.loader-sub{font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem;}
+.loader-bar{width:160px;height:1px;background:var(--border);position:relative;overflow:hidden;}
+.loader-fill{position:absolute;left:-100%;top:0;width:100%;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));animation:loadFill 1.6s ease forwards;}
+.loader-petal{font-size:1.6rem;margin-bottom:0.6rem;animation:petalSpin 2s ease-in-out infinite;}
+@keyframes loadFill{to{left:0;}}
+@keyframes petalSpin{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.1)}}
+
+/* NAV */
+.nav{position:sticky;top:0;left:0;right:0;z-index:100;padding:0 4%;height:68px;display:flex;align-items:center;justify-content:space-between;background:rgba(255,252,249,0.95);backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:border-color 0.3s,box-shadow 0.3s;}
+.nav.scrolled{border-color:var(--border);box-shadow:0 4px 30px var(--shadow);}
+.dark .nav{background:rgba(24,16,15,0.95);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--text-dark);cursor:pointer;display:flex;align-items:center;gap:0.5rem;}
+.nav-logo em{color:var(--rose);font-style:normal;}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none;}
+.nav-links a{font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;font-weight:500;cursor:pointer;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.act{color:var(--rose);}
+.nav-cta{background:var(--text-dark)!important;color:var(--warm-white)!important;padding:0.5rem 1.3rem!important;border-radius:50px!important;font-size:0.75rem!important;letter-spacing:0.12em!important;transition:background 0.3s,transform 0.2s!important;}
+.nav-cta:hover{background:var(--rose)!important;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.8rem 1.8rem;border-radius:50px;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;cursor:pointer;border:none;transition:all 0.3s;font-family:'DM Sans',sans-serif;}
+.btn-dark{background:var(--text-dark);color:var(--warm-white);}
+.btn-dark:hover{background:var(--rose);transform:translateY(-2px);box-shadow:0 8px 25px var(--shadow-md);}
+.btn-outline{background:transparent;color:var(--text-dark);border:1.5px solid var(--text-dark);}
+.btn-outline:hover{background:var(--text-dark);color:var(--warm-white);transform:translateY(-2px);}
+.btn-rose{background:var(--rose);color:white;}
+.btn-rose:hover{background:#e090b0;transform:translateY(-2px);box-shadow:0 8px 25px rgba(242,167,195,0.4);}
+.btn-sm{padding:0.45rem 1rem;font-size:0.72rem;}
+.btn-full{width:100%;justify-content:center;}
+
+/* TYPOGRAPHY */
+.sec-label{font-size:0.67rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--rose);font-weight:500;display:block;margin-bottom:0.7rem;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:400;color:var(--text-dark);line-height:1.2;margin-bottom:1rem;}
+.sec-sub{font-size:0.92rem;color:var(--text-soft);line-height:1.7;max-width:540px;}
+
+/* SECTIONS */
+.section{padding:6rem 6%;}
+.sec-hdr{text-align:center;margin-bottom:3.5rem;}
+.sec-hdr .sec-sub{margin:0 auto;}
+
+/* HERO */
+.hero{min-height:calc(100vh - 68px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 6%;background:var(--warm-white);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:80%;height:130%;background:radial-gradient(ellipse,var(--rose-pale) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{position:relative;z-index:1;max-width:780px;width:100%;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--rose-light);color:var(--text-mid);padding:0.35rem 0.9rem;border-radius:50px;font-size:0.72rem;letter-spacing:0.08em;margin-bottom:1.2rem;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5.5rem);font-weight:300;line-height:1.05;color:var(--text-dark);margin-bottom:1.2rem;}
+.hero-title em{font-style:italic;color:var(--rose);}
+.hero-desc{font-size:1.05rem;color:var(--text-soft);line-height:1.8;margin-bottom:2rem;max-width:520px;margin-left:auto;margin-right:auto;}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.hero-trust{display:flex;align-items:center;justify-content:center;gap:0;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);width:100%;}
+.trust-item{display:flex;flex-direction:column;align-items:center;padding:0 2rem;border-right:1px solid var(--border);}
+.trust-item:first-child{padding-left:0;}
+.trust-item:last-child{border-right:none;padding-right:0;}
+.trust-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;color:var(--text-dark);}
+.trust-lbl{font-size:0.68rem;color:var(--text-muted);letter-spacing:0.08em;margin-top:0.1rem;}
+.hero-visual{position:relative;display:flex;justify-content:center;}
+.hero-blob{width:380px;height:480px;border-radius:60% 40% 55% 45%/50% 55% 45% 50%;overflow:hidden;background:linear-gradient(145deg,var(--rose-light),var(--nude));display:flex;align-items:center;justify-content:center;box-shadow:0 30px 80px var(--shadow-md);animation:morphBlob 8s ease-in-out infinite;position:relative;}
+.hero-blob-inner{font-size:5rem;}
+@keyframes morphBlob{0%,100%{border-radius:60% 40% 55% 45%/50% 55% 45% 50%}50%{border-radius:40% 60% 45% 55%/55% 45% 55% 45%}}
+.float-badge{position:absolute;background:white;border-radius:14px;padding:0.7rem 1rem;box-shadow:0 10px 35px var(--shadow);display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;font-weight:500;animation:floatUp 4s ease-in-out infinite;color:var(--text-dark);}
+.float-badge:nth-child(2){top:10%;left:-8%;animation-delay:0s;}
+.float-badge:nth-child(3){bottom:18%;right:-10%;animation-delay:1.5s;}
+.float-badge:nth-child(4){top:48%;left:-14%;animation-delay:0.8s;}
+@keyframes floatUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* SERVICES GRID */
+.services-section{background:var(--cream);}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.svc-card{background:white;border-radius:20px;padding:2rem;border:1px solid var(--border);transition:all 0.4s;cursor:pointer;position:relative;overflow:hidden;}
+.dark .svc-card{background:#231519;border-color:#3a2830;}
+.svc-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rose),var(--gold));transform:scaleX(0);transition:transform 0.4s;}
+.svc-card:hover{transform:translateY(-5px);box-shadow:0 18px 45px var(--shadow-md);}
+.svc-card:hover::after{transform:scaleX(1);}
+.svc-icon{width:52px;height:52px;border-radius:14px;background:var(--rose-light);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem;}
+.svc-card h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--text-dark);margin-bottom:0.5rem;}
+.svc-card p{font-size:0.84rem;color:var(--text-soft);line-height:1.7;}
+.tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.8rem;}
+.tag{background:var(--rose-light);color:var(--text-mid);padding:0.2rem 0.7rem;border-radius:50px;font-size:0.68rem;letter-spacing:0.05em;}
+
+/* ABOUT STRIP */
+.about-strip{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.about-frame{width:100%;height:440px;background:linear-gradient(145deg,var(--rose-pale),var(--nude));border-radius:28px;display:flex;align-items:center;justify-content:center;font-size:4rem;box-shadow:0 25px 60px var(--shadow);}
+.about-badge{position:absolute;background:white;border-radius:12px;padding:0.9rem 1.2rem;box-shadow:0 10px 30px var(--shadow);font-size:0.78rem;}
+.badge-t{font-weight:600;color:var(--text-dark);font-size:0.82rem;}
+.badge-s{color:var(--text-muted);font-size:0.72rem;margin-top:0.15rem;}
+.creds{display:flex;flex-direction:column;gap:0.7rem;margin:1.2rem 0 1.8rem;}
+.cred{display:flex;align-items:center;gap:0.7rem;font-size:0.85rem;color:var(--text-mid);}
+.cred-dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0;}
+
+/* TESTIMONIALS */
+.testi-section{background:var(--text-dark);padding:6rem 6%;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.testi-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:1.8rem;transition:all 0.3s;}
+.testi-card:hover{background:rgba(255,255,255,0.08);transform:translateY(-4px);}
+.stars{color:var(--gold);font-size:0.85rem;margin-bottom:0.8rem;letter-spacing:2px;}
+.testi-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:rgba(255,255,255,0.82);line-height:1.7;margin-bottom:1.2rem;}
+.testi-author{display:flex;align-items:center;gap:0.7rem;}
+.testi-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:600;color:white;font-size:0.8rem;}
+.testi-name{font-size:0.82rem;color:white;font-weight:500;}
+.testi-role{font-size:0.72rem;color:rgba(255,255,255,0.4);}
+
+/* CTA STRIP */
+.cta-strip{background:linear-gradient(135deg,var(--rose-pale),var(--cream));border-radius:28px;padding:4.5rem 3.5rem;text-align:center;margin:0 6% 6rem;border:1px solid var(--border);}
+.cta-strip h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;color:var(--text-dark);margin-bottom:0.8rem;}
+.cta-strip p{color:var(--text-soft);margin-bottom:1.8rem;font-size:0.95rem;line-height:1.7;}
+.cta-actions{display:flex;align-items:center;justify-content:center;gap:0.8rem;flex-wrap:wrap;}
+
+/* VALUES GRID */
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;}
+.val-card{background:white;border-radius:14px;padding:1.3rem;border:1px solid var(--border);}
+.dark .val-card{background:#231519;border-color:#3a2830;}
+.val-icon{font-size:1.4rem;margin-bottom:0.4rem;}
+.val-t{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:500;color:var(--text-dark);margin-bottom:0.3rem;}
+.val-d{font-size:0.78rem;color:var(--text-soft);line-height:1.6;}
+.modalities-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.mod-card{border-radius:16px;padding:1.8rem;border:1px solid var(--border);transition:all 0.3s;}
+.mod-card:hover{transform:translateY(-4px);box-shadow:0 15px 40px var(--shadow);}
+.mod-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--border);line-height:1;margin-bottom:0.4rem;}
+.mod-card h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;margin-bottom:0.4rem;color:var(--text-dark);}
+.mod-card p{font-size:0.8rem;color:var(--text-soft);line-height:1.6;}
+
+/* SERVICES PAGE */
+.svc-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.svc-detail-card{border-radius:22px;padding:2.2rem;border:1px solid var(--border);background:white;transition:all 0.3s;}
+.dark .svc-detail-card{background:#231519;border-color:#3a2830;}
+.svc-detail-card:hover{box-shadow:0 18px 45px var(--shadow);transform:translateY(-4px);}
+.svc-detail-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--text-dark);margin-bottom:0.7rem;}
+.svc-detail-card p{font-size:0.86rem;color:var(--text-soft);line-height:1.7;margin-bottom:0.6rem;}
+
+/* PRICING */
+.pricing-section{background:var(--cream);padding:5rem 6%;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+.price-card{background:white;border-radius:22px;padding:2.2rem;border:1px solid var(--border);transition:all 0.3s;position:relative;}
+.dark .price-card{background:#231519;border-color:#3a2830;}
+.price-card.featured{background:var(--text-dark);border-color:var(--text-dark);transform:scale(1.03);}
+.price-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 18px 45px var(--shadow-md);}
+.price-card.featured:hover{transform:translateY(-5px) scale(1.04);}
+.price-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--rose);color:white;padding:0.25rem 0.9rem;border-radius:50px;font-size:0.67rem;letter-spacing:0.1em;text-transform:uppercase;}
+.price-type{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;}
+.featured .price-type{color:rgba(255,255,255,0.45);}
+.price-val{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:400;color:var(--text-dark);}
+.featured .price-val{color:white;}
+.price-val sup{font-size:1.2rem;vertical-align:top;margin-top:0.6rem;}
+.price-per{font-size:0.74rem;color:var(--text-muted);margin-bottom:1.2rem;}
+.featured .price-per{color:rgba(255,255,255,0.45);}
+.price-features{list-style:none;margin-bottom:1.8rem;}
+.price-features li{font-size:0.82rem;color:var(--text-soft);padding:0.45rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem;}
+.featured .price-features li{color:rgba(255,255,255,0.65);border-color:rgba(255,255,255,0.1);}
+.price-features li::before{content:'✓';color:var(--rose);font-size:0.7rem;font-weight:700;}
+
+/* BOOKING */
+.booking-wrap{max-width:860px;margin:0 auto;padding:4rem 4%;}
+.steps{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem;}
+.step{display:flex;flex-direction:column;align-items:center;gap:0.35rem;position:relative;flex:1;}
+.step:not(:last-child)::after{content:'';position:absolute;top:16px;left:calc(50% + 18px);right:calc(-50% + 18px);height:1px;background:var(--border);}
+.step.done:not(:last-child)::after{background:var(--rose);}
+.step-n{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:600;color:var(--text-muted);background:white;z-index:1;transition:all 0.3s;}
+.step.active .step-n,.step.done .step-n{border-color:var(--rose);color:white;background:var(--rose);}
+.step-l{font-size:0.68rem;color:var(--text-muted);letter-spacing:0.06em;}
+.step.active .step-l{color:var(--rose);font-weight:500;}
+
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.book-panel{background:white;border-radius:22px;padding:1.8rem;border:1px solid var(--border);}
+.dark .book-panel{background:#231519;border-color:#3a2830;}
+.panel-t{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:500;color:var(--text-dark);margin-bottom:0.9rem;}
+.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.cal-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--text-dark);}
+.cal-nav{background:none;border:none;cursor:pointer;font-size:0.95rem;color:var(--text-muted);transition:color 0.2s;padding:0.2rem 0.5rem;}
+.cal-nav:hover{color:var(--rose);}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center;}
+.cal-day-lbl{font-size:0.65rem;color:var(--text-muted);letter-spacing:0.06em;padding:0.25rem 0;font-weight:500;}
+.cal-day{aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;cursor:pointer;color:var(--text-mid);transition:all 0.2s;border:none;background:none;}
+.cal-day:hover:not(.empty):not(.past){background:var(--rose-light);color:var(--text-dark);}
+.cal-day.sel{background:var(--rose);color:white;font-weight:600;}
+.cal-day.today{border:1px solid var(--rose);}
+.cal-day.past{color:var(--border);cursor:default;}
+.time-slots{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.5rem;}
+.ts{padding:0.55rem 0.7rem;border-radius:9px;border:1px solid var(--border);background:white;font-size:0.78rem;color:var(--text-mid);cursor:pointer;transition:all 0.2s;text-align:center;}
+.dark .ts{background:#231519;}
+.ts:hover:not(.booked){border-color:var(--rose);color:var(--rose);}
+.ts.sel{background:var(--rose);border-color:var(--rose);color:white;}
+.ts.booked{background:var(--border);color:var(--text-muted);cursor:not-allowed;}
+.st-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;}
+.st-btn{padding:0.9rem;border-radius:12px;border:1.5px solid var(--border);background:none;cursor:pointer;text-align:center;transition:all 0.2s;}
+.st-btn:hover{border-color:var(--rose);}
+.st-btn.sel{border-color:var(--rose);background:var(--rose-light);}
+.st-icon{font-size:1.4rem;display:block;margin-bottom:0.25rem;}
+.st-lbl{font-size:0.76rem;font-weight:500;color:var(--text-dark);}
+.st-price{font-size:0.68rem;color:var(--text-muted);margin-top:0.1rem;}
+.book-summary{background:var(--rose-pale);border-radius:14px;padding:1.2rem;margin-top:0.8rem;}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid var(--border);font-size:0.82rem;}
+.sum-row:last-child{border-bottom:none;font-weight:600;}
+.sum-l{color:var(--text-soft);}
+.sum-v{color:var(--text-dark);}
+
+/* FORMS */
+.fg{margin-bottom:1rem;}
+.fl{display:block;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-soft);margin-bottom:0.35rem;font-weight:500;}
+.fi,.fs,.fta{width:100%;padding:0.75rem 0.9rem;border:1.5px solid var(--border);border-radius:11px;font-family:'DM Sans',sans-serif;font-size:0.86rem;color:var(--text-dark);background:white;transition:border-color 0.2s,box-shadow 0.2s;outline:none;}
+.dark .fi,.dark .fs,.dark .fta{background:#231519;border-color:#3a2830;color:var(--text-dark);}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(242,167,195,0.15);}
+.fta{resize:vertical;min-height:90px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0.9rem;}
+.fchk{display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--text-soft);cursor:pointer;margin-bottom:0.9rem;}
+.fchk input{width:15px;height:15px;accent-color:var(--rose);}
+
+/* CONFIRM */
+.confirm-wrap{text-align:center;padding:2.5rem 1.5rem;}
+.confirm-icon{font-size:3.5rem;margin-bottom:1.2rem;animation:bounceIn 0.6s ease;}
+@keyframes bounceIn{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
+.confirm-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:var(--text-dark);margin-bottom:0.7rem;}
+.confirm-detail{background:white;border-radius:14px;padding:1.3rem;margin:1.2rem 0 1.5rem;border:1px solid var(--border);text-align:left;}
+.dark .confirm-detail{background:#231519;border-color:#3a2830;}
+
+/* BLOG */
+.blog-cats{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2.5rem;justify-content:center;}
+.cat-btn{padding:0.45rem 1.1rem;border-radius:50px;border:1.5px solid var(--border);background:none;cursor:pointer;font-size:0.76rem;font-family:'DM Sans',sans-serif;color:var(--text-mid);transition:all 0.2s;letter-spacing:0.04em;}
+.cat-btn:hover,.cat-btn.act{background:var(--rose);border-color:var(--rose);color:white;}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.blog-card{border-radius:18px;overflow:hidden;border:1px solid var(--border);background:white;transition:all 0.3s;cursor:pointer;}
+.dark .blog-card{background:#231519;border-color:#3a2830;}
+.blog-card:hover{transform:translateY(-5px);box-shadow:0 18px 45px var(--shadow-md);}
+.blog-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;}
+.blog-body{padding:1.3rem;}
+.blog-cat{font-size:0.64rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--rose);font-weight:600;margin-bottom:0.4rem;}
+.blog-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--text-dark);line-height:1.3;margin-bottom:0.5rem;}
+.blog-exc{font-size:0.8rem;color:var(--text-soft);line-height:1.6;}
+.blog-meta{display:flex;align-items:center;gap:0.9rem;margin-top:0.9rem;padding-top:0.9rem;border-top:1px solid var(--border);font-size:0.7rem;color:var(--text-muted);}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3.5rem;align-items:start;}
+.contact-item{display:flex;gap:0.9rem;margin-bottom:1.8rem;}
+.contact-icon{width:44px;height:44px;border-radius:11px;background:var(--rose-light);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.contact-item h4{font-size:0.82rem;font-weight:600;margin-bottom:0.25rem;color:var(--text-dark);}
+.contact-item p{font-size:0.82rem;color:var(--text-soft);}
+.map-box{width:100%;height:220px;border-radius:18px;background:linear-gradient(135deg,var(--rose-pale),var(--nude));display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:1.5rem;border:1px solid var(--border);font-size:2.2rem;gap:0.4rem;}
+.map-lbl{font-size:0.78rem;color:var(--text-soft);}
+.contact-form-card{background:white;border-radius:22px;padding:2.2rem;border:1px solid var(--border);box-shadow:0 10px 40px var(--shadow);}
+.dark .contact-form-card{background:#231519;border-color:#3a2830;}
+
+/* AUTH MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(26,16,20,0.65);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1rem;}
+.modal-box{background:white;border-radius:26px;padding:2.5rem;width:100%;max-width:420px;box-shadow:0 30px 80px rgba(0,0,0,0.2);position:relative;animation:slideUpFade 0.3s ease;}
+.dark .modal-box{background:#211418;}
+@keyframes slideUpFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--text-muted);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.modal-close:hover{background:var(--rose-light);color:var(--text-dark);}
+.modal-logo{text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text-dark);margin-bottom:1.5rem;}
+.modal-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--rose-pale);border-radius:11px;padding:3px;margin-bottom:1.5rem;}
+.modal-tab{padding:0.55rem;border-radius:8px;border:none;background:none;font-size:0.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text-muted);transition:all 0.2s;font-weight:500;}
+.modal-tab.act{background:white;color:var(--text-dark);box-shadow:0 2px 8px var(--shadow);}
+.modal-hint{font-size:0.72rem;color:var(--text-muted);text-align:center;margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--border);}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.8rem;right:1.8rem;z-index:300;background:var(--text-dark);color:white;padding:0.8rem 1.3rem;border-radius:12px;font-size:0.82rem;box-shadow:0 10px 30px rgba(0,0,0,0.2);animation:toastIn 0.3s ease;display:flex;align-items:center;gap:0.5rem;}
+.toast.success{background:#2d7a5a;}
+.toast.error{background:#a83030;}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* DASHBOARD */
+.dash-layout{display:grid;grid-template-columns:230px 1fr;min-height:100vh;}
+.dash-sidebar{background:var(--text-dark);padding:2rem 1.3rem;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.dash-logo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;color:white;margin-bottom:0.25rem;}
+.dash-role{font-size:0.65rem;color:rgba(255,255,255,0.35);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.08);}
+.dash-nav{display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.9rem;border-radius:9px;font-size:0.8rem;color:rgba(255,255,255,0.5);cursor:pointer;transition:all 0.2s;margin-bottom:0.25rem;background:none;border:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif;}
+.dash-nav:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.75);}
+.dash-nav.act{background:rgba(242,167,195,0.18);color:var(--rose);}
+.dash-main{padding:2.2rem 2.5rem;background:var(--cream);overflow-y:auto;}
+.dash-hdr{margin-bottom:1.8rem;}
+.dash-greeting{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;color:var(--text-dark);}
+.dash-date{font-size:0.78rem;color:var(--text-muted);margin-top:0.15rem;}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+.stat-card{background:white;border-radius:16px;padding:1.3rem;border:1px solid var(--border);}
+.dark .stat-card{background:#231519;border-color:#3a2830;}
+.stat-icon{font-size:1.3rem;margin-bottom:0.4rem;}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;color:var(--text-dark);}
+.stat-lbl{font-size:0.72rem;color:var(--text-muted);}
+.stat-chg{font-size:0.7rem;color:#2d7a5a;margin-top:0.2rem;}
+.dash-card{background:white;border-radius:16px;padding:1.6rem;border:1px solid var(--border);margin-bottom:1.3rem;}
+.dark .dash-card{background:#231519;border-color:#3a2830;}
+.dash-card-t{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--text-dark);margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;}
+.dtable{width:100%;border-collapse:collapse;}
+.dtable th{text-align:left;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);padding:0.45rem 0.7rem;border-bottom:1px solid var(--border);font-weight:500;}
+.dtable td{padding:0.8rem 0.7rem;border-bottom:1px solid var(--border);font-size:0.82rem;color:var(--text-mid);}
+.dtable tr:last-child td{border-bottom:none;}
+.dtable tr:hover td{background:var(--rose-pale);}
+.dark .dtable tr:hover td{background:rgba(242,167,195,0.05);}
+.stt{display:inline-block;padding:0.18rem 0.65rem;border-radius:50px;font-size:0.67rem;font-weight:600;letter-spacing:0.05em;}
+.stt-confirmed{background:#dcfce7;color:#166534;}
+.stt-pending{background:#fef9c3;color:#854d0e;}
+.stt-cancelled{background:#fee2e2;color:#991b1b;}
+.stt-paid{background:#dcfce7;color:#166534;}
+.stt-refunded{background:#fee2e2;color:#991b1b;}
+.stt-upcoming{background:#dbeafe;color:#1e40af;}
+.stt-new{background:#dbeafe;color:#1e40af;}
+.stt-active{background:#dcfce7;color:#166534;}
+.stt-paused{background:#fef9c3;color:#854d0e;}
+.up-session{border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:0.8rem;display:flex;align-items:center;gap:1.2rem;transition:all 0.2s;}
+.up-session:hover{border-color:var(--rose);}
+.sess-date{width:44px;text-align:center;flex-shrink:0;}
+.sess-day{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;color:var(--text-dark);line-height:1;}
+.sess-mon{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;}
+.sess-div{width:1px;height:36px;background:var(--border);flex-shrink:0;}
+.sess-info{flex:1;}
+.sess-type{font-weight:600;font-size:0.84rem;color:var(--text-dark);}
+.sess-time{font-size:0.76rem;color:var(--text-muted);margin-top:0.15rem;}
+.sess-acts{display:flex;gap:0.4rem;}
+.abtn{padding:0.35rem 0.8rem;border-radius:7px;border:1px solid var(--border);background:none;font-size:0.72rem;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--text-mid);transition:all 0.2s;}
+.abtn:hover{border-color:var(--rose);color:var(--rose);}
+.abtn.pri{background:var(--rose);border-color:var(--rose);color:white;}
+.abtn.del{border-color:#fca5a5;color:#dc2626;}
+.abtn.del:hover{background:#fee2e2;}
+
+/* ADMIN */
+.admin-sb{background:#110a0d;}
+.revenue-chart{display:flex;align-items:flex-end;gap:0.7rem;height:130px;padding-top:0.8rem;}
+.chart-bar-w{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.4rem;}
+.chart-bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--rose),var(--rose-light));position:relative;transition:all 0.3s;cursor:pointer;min-height:4px;}
+.chart-bar:hover{background:linear-gradient(180deg,var(--gold),var(--gold-light));}
+.chart-bar-lbl{font-size:0.65rem;color:var(--text-muted);}
+.chart-bar-val{font-size:0.65rem;color:var(--text-mid);font-weight:600;}
+.prog-wrap{margin-bottom:0.7rem;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-mid);margin-bottom:0.25rem;}
+.prog-track{width:100%;height:5px;background:var(--border);border-radius:3px;}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width 0.8s ease;}
+.icon-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;transition:all 0.2s;color:var(--text-mid);}
+.icon-btn:hover{border-color:var(--rose);color:var(--rose);background:var(--rose-light);}
+.icon-btn.del:hover{border-color:#fca5a5;color:#dc2626;background:#fee2e2;}
+.search-wrap{display:flex;align-items:center;gap:0.5rem;background:var(--cream);border:1px solid var(--border);border-radius:9px;padding:0.45rem 0.8rem;font-size:0.8rem;}
+.search-wrap input{border:none;background:none;outline:none;font-family:'DM Sans',sans-serif;font-size:0.8rem;color:var(--text-dark);width:180px;}
+.avail-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.7rem;}
+.avail-day{text-align:center;padding:0.9rem 0.4rem;border-radius:12px;border:1px solid var(--border);cursor:pointer;transition:all 0.2s;}
+.avail-day.on{background:var(--rose-light);border-color:var(--rose);}
+.avail-d-name{font-size:0.74rem;font-weight:600;color:var(--text-dark);}
+.avail-toggle{width:34px;height:18px;border-radius:9px;background:var(--border);position:relative;margin:0.4rem auto 0;cursor:pointer;transition:background 0.2s;}
+.avail-toggle.on{background:var(--rose);}
+.avail-dot{width:14px;height:14px;border-radius:50%;background:white;position:absolute;top:2px;left:2px;transition:left 0.2s;}
+.avail-toggle.on .avail-dot{left:18px;}
+.email-card{border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.3rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:0.7rem;transition:all 0.2s;}
+.email-card:hover{border-color:var(--rose);}
+.email-t{font-weight:600;font-size:0.84rem;color:var(--text-dark);}
+.email-d{font-size:0.74rem;color:var(--text-muted);margin-top:0.15rem;}
+.email-stat{font-size:0.68rem;padding:0.18rem 0.55rem;border-radius:50px;}
+.email-stat.on{background:#dcfce7;color:#166534;}
+.email-stat.off{background:var(--border);color:var(--text-muted);}
+.tbl-acts{display:flex;gap:0.35rem;}
+
+/* DARK MODE TOGGLE */
+.dark-toggle{position:fixed;bottom:1.8rem;left:1.8rem;z-index:50;width:42px;height:42px;border-radius:50%;background:var(--text-dark);color:white;border:none;cursor:pointer;font-size:1rem;box-shadow:0 4px 15px var(--shadow-md);display:flex;align-items:center;justify-content:center;transition:all 0.3s;}
+.dark-toggle:hover{transform:scale(1.1);}
+
+/* FOOTER */
+footer{background:var(--text-dark);color:rgba(255,255,255,0.55);padding:4.5rem 6% 2.5rem;}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem;}
+.foot-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:300;color:white;margin-bottom:0.7rem;}
+.foot-desc{font-size:0.82rem;line-height:1.7;}
+.foot-heading{font-size:0.67rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:1rem;font-weight:500;}
+.foot-links{list-style:none;}
+.foot-links li{margin-bottom:0.5rem;}
+.foot-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.82rem;cursor:pointer;transition:color 0.2s;}
+.foot-links a:hover{color:var(--rose);}
+.foot-bottom{padding-top:1.8rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;font-size:0.74rem;}
+.socials{display:flex;gap:0.7rem;}
+.social-a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.45);text-decoration:none;font-size:0.85rem;transition:all 0.2s;cursor:pointer;}
+.social-a:hover{border-color:var(--rose);color:var(--rose);background:rgba(242,167,195,0.1);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;text-align:center;padding:4rem 5%;}
+  .hero-visual{display:none;}
+  .services-grid{grid-template-columns:1fr 1fr;}
+  .testi-grid{grid-template-columns:1fr 1fr;}
+  .about-strip{grid-template-columns:1fr;}
+  .about-frame-wrap{display:none;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+  .dash-layout{grid-template-columns:1fr;}
+  .dash-sidebar{display:none;}
+  .pricing-grid{grid-template-columns:1fr;max-width:380px;margin:0 auto;}
+}
+@media(max-width:768px){
+  .services-grid{grid-template-columns:1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .blog-grid{grid-template-columns:1fr;}
+  .svc-detail-grid{grid-template-columns:1fr;}
+  .book-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr;}
+  .modalities-grid{grid-template-columns:1fr 1fr;}
+  .frow{grid-template-columns:1fr;}
+  .about-hero-grid{grid-template-columns:1fr!important;}
+  .cta-strip{margin:0 4% 4rem;padding:3rem 2rem;}
+  .section{padding:4.5rem 5%;}
+}
+`;
+
+// DATA
+const SVCS = [
+  {icon:'💑',title:'Relationship Counselling',desc:'Navigate conflict, build deeper connection, and heal relational wounds in a safe, non-judgemental space.',tags:['Couples','Communication','Intimacy']},
+  {icon:'🌿',title:'Trauma Recovery',desc:'Gently process past experiences using trauma-informed approaches to restore safety and wholeness.',tags:['PTSD','Complex Trauma','EMDR']},
+  {icon:'🧘',title:'Anxiety & Stress',desc:'Understand your anxiety, develop coping tools, and reclaim peace in your everyday life.',tags:['Generalised Anxiety','Panic','OCD']},
+  {icon:'🌱',title:'Youth Support',desc:'A safe and creative space for young people aged 12–25 to explore emotions and build resilience.',tags:['Teens','Young Adults','School Stress']},
+  {icon:'💬',title:'General Mental Health',desc:'Compassionate support for depression, life transitions, self-esteem, and everyday wellbeing challenges.',tags:['Depression','Self-Esteem','Life Changes']},
+  {icon:'👁️',title:'Individual Therapy',desc:'One-on-one sessions tailored entirely to you — your pace, your needs, your healing journey.',tags:['All Issues','Flexible','Ongoing Support']},
+];
+const TESTIS = [
+  {text:'"My therapist at Shine created such a warm, safe space. After just six weeks I felt a profound shift I hadn\'t expected."',name:'Sarah M.',role:'Anxiety & Stress',init:'S'},
+  {text:'"The relationship counselling saved my marriage. We finally learned how to communicate after years of struggling."',name:'James & Emma',role:'Couples Counselling',init:'J'},
+  {text:'"Coming as a 17-year-old I was terrified, but the youth support sessions were so gentle. I finally felt heard."',name:'Ayla T.',role:'Youth Support',init:'A'},
+  {text:'"Trauma work is difficult, but having such a skilled, compassionate guide made it possible. I\'m truly grateful."',name:'Michael R.',role:'Trauma Recovery',init:'M'},
+  {text:'"I\'ve tried other therapists but nothing compared to the level of care and expertise I found at Shine."',name:'Priya K.',role:'General MH',init:'P'},
+  {text:'"The online sessions were just as powerful as in-person. Incredibly professional and deeply healing."',name:'Chloe B.',role:'Online Therapy',init:'C'},
+];
+const BLOGS = [
+  {cat:'Anxiety',title:'5 Grounding Techniques to Calm Anxious Thoughts',exc:'When anxiety spikes, having practical tools at hand can make all the difference. These somatic grounding exercises work in minutes.',date:'Mar 10, 2026',read:'4 min',icon:'🧠',bg:'linear-gradient(135deg,#fce8f0,#fdf4f8)'},
+  {cat:'Relationships',title:"Why Conflict Doesn't Mean the End of Your Relationship",exc:"Conflict is inevitable in any close relationship. What matters isn't whether you fight, but how you repair after.",date:'Mar 3, 2026',read:'6 min',icon:'💑',bg:'linear-gradient(135deg,#fdf4f8,#fce8f0)'},
+  {cat:'Trauma',title:'What is Trauma-Informed Care and Why It Matters',exc:'Trauma-informed approaches shift the question from "what is wrong with you?" to "what happened to you?"',date:'Feb 25, 2026',read:'5 min',icon:'🌿',bg:'linear-gradient(135deg,#f0f8e8,#e8f5e8)'},
+  {cat:'Self-Care',title:'Building a Mental Health Routine That Actually Sticks',exc:'Consistency beats intensity when it comes to mental wellbeing. Learn how to create micro-habits that compound.',date:'Feb 18, 2026',read:'3 min',icon:'🌸',bg:'linear-gradient(135deg,#fef9c3,#fefce8)'},
+  {cat:'Youth',title:'Talking to Teenagers About Mental Health Without the Eye Rolls',exc:"Connecting with teens around their inner world requires a different approach. Here's what actually works.",date:'Feb 10, 2026',read:'5 min',icon:'🌱',bg:'linear-gradient(135deg,#dbeafe,#e8f0fe)'},
+  {cat:'Anxiety',title:'The Difference Between Stress and an Anxiety Disorder',exc:'Feeling stressed is normal. But when does stress cross into something that needs professional support?',date:'Feb 1, 2026',read:'4 min',icon:'💆',bg:'linear-gradient(135deg,#f5e8fe,#f0e8fe)'},
+];
+const CLIENTS_D = [
+  {id:1,name:'Sophie Anderson',email:'sophie@email.com',sessions:12,status:'Active',last:'Mar 14',issue:'Anxiety'},
+  {id:2,name:'James Mitchell',email:'james@email.com',sessions:8,status:'Active',last:'Mar 12',issue:'Relationships'},
+  {id:3,name:'Emma Clarke',email:'emma@email.com',sessions:4,status:'New',last:'Mar 10',issue:'Trauma'},
+  {id:4,name:'Liam Thompson',email:'liam@email.com',sessions:20,status:'Active',last:'Mar 8',issue:'Depression'},
+  {id:5,name:'Olivia Brown',email:'olivia@email.com',sessions:3,status:'New',last:'Mar 5',issue:'Youth'},
+  {id:6,name:'Noah Wilson',email:'noah@email.com',sessions:6,status:'Paused',last:'Feb 20',issue:'Anxiety'},
+  {id:7,name:'Ava Davis',email:'ava@email.com',sessions:15,status:'Active',last:'Mar 14',issue:'General MH'},
+];
+const BOOKINGS_D = [
+  {id:1,client:'Sophie Anderson',date:'Mar 18',time:'10:00 AM',type:'Individual',mode:'Online',status:'Confirmed',fee:'$180'},
+  {id:2,client:'James Mitchell',date:'Mar 18',time:'2:00 PM',type:'Couples',mode:'In-Person',status:'Confirmed',fee:'$220'},
+  {id:3,client:'Emma Clarke',date:'Mar 19',time:'11:30 AM',type:'Individual',mode:'Online',status:'Pending',fee:'$180'},
+  {id:4,client:'Liam Thompson',date:'Mar 19',time:'3:00 PM',type:'Individual',mode:'In-Person',status:'Confirmed',fee:'$180'},
+  {id:5,client:'Olivia Brown',date:'Mar 20',time:'9:00 AM',type:'Youth',mode:'In-Person',status:'Pending',fee:'$150'},
+  {id:6,client:'Noah Wilson',date:'Mar 21',time:'1:00 PM',type:'Individual',mode:'Online',status:'Cancelled',fee:'$180'},
+  {id:7,client:'Ava Davis',date:'Mar 21',time:'4:00 PM',type:'Individual',mode:'In-Person',status:'Confirmed',fee:'$180'},
+];
+const PAYMENTS_D = [
+  {id:'INV-001',client:'Sophie Anderson',date:'Mar 14',amount:'$180',status:'Paid',method:'Stripe'},
+  {id:'INV-002',client:'James Mitchell',date:'Mar 12',amount:'$220',status:'Paid',method:'Medicare'},
+  {id:'INV-003',client:'Emma Clarke',date:'Mar 10',amount:'$180',status:'Pending',method:'Stripe'},
+  {id:'INV-004',client:'Liam Thompson',date:'Mar 8',amount:'$180',status:'Paid',method:'Stripe'},
+  {id:'INV-005',client:'Ava Davis',date:'Mar 5',amount:'$180',status:'Paid',method:'Medicare'},
+  {id:'INV-006',client:'Noah Wilson',date:'Feb 20',amount:'$180',status:'Refunded',method:'Stripe'},
+];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DNAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+const TSLOTS = ['9:00 AM','10:00 AM','11:30 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+const BOOKED = ['10:00 AM','2:00 PM'];
+const STYPES = [{icon:'💻',label:'Individual Online',price:'$180'},{icon:'🪑',label:'Individual In-Person',price:'$180'},{icon:'💑',label:'Couples Online',price:'$220'},{icon:'💑',label:'Couples In-Person',price:'$220'}];
+
+// HELPERS
+const Stt = ({s}) => {
+  const k = s.toLowerCase().replace(/ /g,'-');
+  return <span className={`stt stt-${k}`}>{s}</span>;
+};
+
+// ---- COMPONENTS ----
+function Loader({done}) {
+  return (
+    <div className={`loader-wrap${done?' out':''}`}>
+      <div className="loader-petal">🌸</div>
+      <div className="loader-logo">Shine Counselling</div>
+      <div className="loader-sub">Melbourne, Australia</div>
+      <div className="loader-bar"><div className="loader-fill"/></div>
+    </div>
+  );
+}
+
+function Toast({msg,type,onClose}) {
+  useEffect(()=>{const t=setTimeout(onClose,3000);return()=>clearTimeout(t);},[]);
+  return <div className={`toast ${type}`}><span>{type==='success'?'✓':'✗'}</span>{msg}</div>;
+}
+
+function Nav({page,setPage,user,setShowAuth,setUser}) {
+  return (
+    <nav className="nav">
+      <div className="nav-logo" onClick={()=>setPage('home')}><em>✦</em> Shine Counselling</div>
+      <ul className="nav-links">
+        {['home','about','services','blog','contact'].map(p=>(
+          <li key={p}><a className={page===p?'act':''} onClick={()=>setPage(p)}>{p.charAt(0).toUpperCase()+p.slice(1)}</a></li>
+        ))}
+        {user ? (
+          <>
+            <li><a className="act" onClick={()=>setPage('dashboard')}>{user.name}</a></li>
+            <li><a className="nav-cta" onClick={()=>{setUser(null);setPage('home');}}>Sign Out</a></li>
+          </>
+        ) : (
+          <li><a className="nav-cta" onClick={()=>setShowAuth(true)}>Book Now</a></li>
+        )}
+      </ul>
+    </nav>
+  );
+}
+
+function Footer({setPage}) {
+  return (
+    <footer>
+      <div className="foot-grid">
+        <div>
+          <div className="foot-logo">✦ Shine Counselling</div>
+          <p className="foot-desc">A safe, compassionate space for healing, growth, and reconnection. PACFA accredited. Melbourne-based.</p>
+          <div className="socials" style={{marginTop:'1.2rem'}}>
+            {['📷','💼','🐦','📘'].map((s,i)=><div key={i} className="social-a">{s}</div>)}
+          </div>
         </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Purwanchal <span>Cafe</span></h1>
-                <p class="hero-tagline">
-                    Where flavors meet comfort. Experience the perfect blend of traditional taste and modern ambiance in the heart of Itahari, Sunsari.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#menu" class="btn btn-primary">
-                        <i class="fas fa-utensils"></i> Explore Menu
-                    </a>
-                    <a href="#order" class="btn btn-secondary">
-                        <i class="fas fa-shopping-cart"></i> Order Now
-                    </a>
-                </div>
-            </div>
+        <div>
+          <div className="foot-heading">Services</div>
+          <ul className="foot-links">
+            {SVCS.map(s=><li key={s.title}><a onClick={()=>setPage('services')}>{s.title}</a></li>)}
+          </ul>
         </div>
-    </section>
-
-    <!-- Food Menu Section -->
-    <section class="menu-section" id="menu">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Food Menu</h2>
-                <p>Delicious traditional recipes with a modern touch</p>
-            </div>
-            
-            <div class="menu-categories">
-                <button class="category-btn active" data-category="all">All</button>
-                <button class="category-btn" data-category="breakfast">Breakfast</button>
-                <button class="category-btn" data-category="lunch">Lunch</button>
-                <button class="category-btn" data-category="snacks">Snacks</button>
-                <button class="category-btn" data-category="drinks">Drinks</button>
-                <button class="category-btn" data-category="dessert">Dessert</button>
-            </div>
-            
-            <div class="menu-items" id="menuItemsContainer">
-                <!-- Menu items will be populated by JavaScript -->
-            </div>
+        <div>
+          <div className="foot-heading">Quick Links</div>
+          <ul className="foot-links">
+            {[['about','About'],['services','Services'],['booking','Book a Session'],['blog','Blog'],['contact','Contact']].map(([p,l])=>(
+              <li key={p}><a onClick={()=>setPage(p)}>{l}</a></li>
+            ))}
+          </ul>
         </div>
-    </section>
-
-    <!-- Order Now Section -->
-    <section class="order-section" id="order">
-        <div class="container">
-            <div class="section-title">
-                <h2>Order Now</h2>
-                <p>Visit us or get in touch to place your order</p>
-            </div>
-            
-            <div class="order-container">
-                <div class="order-card scroll-fade">
-                    <h3><i class="fas fa-map-marker-alt"></i> Location</h3>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-location-dot"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Antidiene, Itahari</h4>
-                            <p>Sunsari: 0.000</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-directions"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Easy to Find</h4>
-                            <p>Near main bus park, opposite to City Mall</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-parking"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Parking Available</h4>
-                            <p>Free parking for our customers</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="order-card scroll-fade">
-                    <h3><i class="fas fa-phone"></i> Contact</h3>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-phone-volume"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Phone Numbers</h4>
-                            <p>025-582888</p>
-                            <p>+971 289-3665354</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Email Address</h4>
-                            <p>order@purwanchalcafe.com</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>WhatsApp Order</h4>
-                            <p>+977 980-1234567</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="order-card hours-card scroll-fade">
-                    <h3><i class="fas fa-clock"></i> Opening Hours</h3>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Open Daily</h4>
-                            <p>8:00 AM - 10:00 PM</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Breakfast</h4>
-                            <p>8:00 AM - 11:00 AM</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fas fa-moon"></i>
-                        </div>
-                        <div class="info-content">
-                            <h4>Dinner Special</h4>
-                            <p>6:00 PM - 10:00 PM</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="button-container">
-                <a href="tel:025582888" class="cta-button scroll-fade">
-                    <i class="fas fa-phone"></i> Call Now to Order
-                </a>
-            </div>
+        <div>
+          <div className="foot-heading">Contact</div>
+          <ul className="foot-links">
+            <li><a>📍 Melbourne, VIC, AU</a></li>
+            <li><a>📧 hello@shinecounselling.com.au</a></li>
+            <li><a>📞 (03) 9XXX XXXX</a></li>
+            <li><a>📱 @shine_counsellingservices</a></li>
+            <li style={{marginTop:'0.8rem'}}><a style={{color:'var(--rose-light)'}}>PACFA Reg. No. 29541</a></li>
+          </ul>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about scroll-fade">
-                    <div class="footer-logo">
-                        <i class="fas fa-mug-hot"></i>Purwanchal Cafe
-                    </div>
-                    <p>Where flavors meet comfort. Experience the perfect blend of traditional taste and modern ambiance in the heart of Itahari.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-tiktok"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section scroll-fade">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="#menu"><i class="fas fa-chevron-right"></i> Food Menu</a></li>
-                        <li><a href="#order"><i class="fas fa-chevron-right"></i> Order Now</a></li>
-                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section scroll-fade">
-                    <h4>Contact Info</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-location-dot"></i> Antidiene, Itahari, Sunsari</a></li>
-                        <li><a href="tel:025582888"><i class="fas fa-phone"></i> 025-582888</a></li>
-                        <li><a href="tel:+9712893665354"><i class="fas fa-phone"></i> +971 289-3665354</a></li>
-                        <li><a href="mailto:info@purwanchalcafe.com"><i class="fas fa-envelope"></i> info@purwanchalcafe.com</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright scroll-fade">
-                <p>&copy; 2023 Purwanchal Cafe. All Rights Reserved. | Crafted with <i class="fas fa-heart" style="color: #ff6b6b;"></i> in Itahari</p>
-            </div>
+      </div>
+      <div className="foot-bottom">
+        <span>© 2026 Shine Counselling Services. All rights reserved.</span>
+        <div style={{display:'flex',gap:'1.2rem'}}>
+          <a style={{color:'rgba(255,255,255,0.35)',textDecoration:'none',fontSize:'0.74rem'}}>Privacy Policy</a>
+          <a style={{color:'rgba(255,255,255,0.35)',textDecoration:'none',fontSize:'0.74rem'}}>Terms of Service</a>
         </div>
+      </div>
     </footer>
+  );
+}
 
-    <script>
-        // Enhanced Menu Data with UNIQUE images for ALL dishes
-        const menuData = [
-            {
-                id: 1,
-                name: "Traditional Breakfast",
-                price: "Rs 450",
-                description: "Sel roti, achar, boiled eggs and masala tea.",
-                category: "breakfast",
-                tags: ["Popular", "Vegetarian"],
-                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&auto=format&fit=crop&q=80",
-                badge: "Morning Special"
-            },
-            {
-                id: 2,
-                name: "Momo Platter",
-                price: "Rs 550",
-                description: "Steamed dumplings with spicy tomato chutney.",
-                category: "lunch",
-                tags: ["Best Seller", "Spicy"],
-                image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&auto=format&fit=crop&q=80",
-                badge: "Hot"
-            },
-            {
-                id: 3,
-                name: "Thakali Thali",
-                price: "Rs 650",
-                description: "Traditional Nepali meal with rice, lentils and curry.",
-                category: "lunch",
-                tags: ["Traditional", "Complete"],
-                image: "https://images.unsplash.com/photo-1585937421612-70ca003675ed?w=400&auto=format&fit=crop&q=80",
-                badge: "Traditional"
-            },
-            {
-                id: 4,
-                name: "Chicken Sekuwa",
-                price: "Rs 680",
-                description: "Grilled chicken with traditional spices.",
-                category: "snacks",
-                tags: ["Spicy", "Non-Veg"],
-                image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&auto=format&fit=crop&q=80",
-                badge: "Grilled"
-            },
-            {
-                id: 5,
-                name: "Masala Chai",
-                price: "Rs 120",
-                description: "Traditional spiced tea with milk.",
-                category: "drinks",
-                tags: ["Hot", "Traditional"],
-                image: "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=400&auto=format&fit=crop&q=80",
-                badge: "Hot"
-            },
-            {
-                id: 6,
-                name: "Special Coffee",
-                price: "Rs 180",
-                description: "Signature blend with cardamom and cinnamon.",
-                category: "drinks",
-                tags: ["Signature", "Hot"],
-                image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&auto=format&fit=crop&q=80",
-                badge: "Signature"
-            },
-            {
-                id: 7,
-                name: "Juju Dhau",
-                price: "Rs 220",
-                description: "Traditional sweet curd from Bhaktapur.",
-                category: "dessert",
-                tags: ["Sweet", "Traditional"],
-                image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&auto=format&fit=crop&q=80",
-                badge: "Sweet"
-            },
-            {
-                id: 8,
-                name: "Mango Lassi",
-                price: "Rs 200",
-                description: "Creamy yogurt drink with fresh mango.",
-                category: "drinks",
-                tags: ["Cold", "Refreshing"],
-                image: "https://images.unsplash.com/photo-1565962652551-4fe3b8e8c6c0?w=400&auto=format&fit=crop&q=80",
-                badge: "Refreshing"
-            },
-            {
-                id: 9,
-                name: "Veg Chow Mein",
-                price: "Rs 420",
-                description: "Stir-fried noodles with fresh vegetables.",
-                category: "lunch",
-                tags: ["Vegetarian", "Quick"],
-                image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400&auto=format&fit=crop&q=80",
-                badge: "Quick"
-            },
-            {
-                id: 10,
-                name: "Vegetable Pakoda",
-                price: "Rs 320",
-                description: "Crispy vegetable fritters with mint chutney.",
-                category: "snacks",
-                tags: ["Crispy", "Vegetarian"],
-                image: "https://images.unsplash.com/photo-1633613286991-611fe299c4be?w=400&auto=format&fit=crop&q=80",
-                badge: "Crispy"
-            },
-            {
-                id: 11,
-                name: "Ice Cream Sundae",
-                price: "Rs 280",
-                description: "Vanilla ice cream with chocolate and nuts.",
-                category: "dessert",
-                tags: ["Sweet", "Cold"],
-                image: "https://images.unsplash.com/photo-1566566717285-2b3d42b9e4c7?w=400&auto=format&fit=crop&q=80",
-                badge: "Cold"
-            },
-            {
-                id: 12,
-                name: "Fresh Fruit Juice",
-                price: "Rs 180",
-                description: "Seasonal fresh fruit juice.",
-                category: "drinks",
-                tags: ["Fresh", "Healthy"],
-                image: "https://images.unsplash.com/photo-1629361726420-629e6ba67c1f?w=400&auto=format&fit=crop&q=80",
-                badge: "Fresh"
-            },
-            {
-                id: 13,
-                name: "Paneer Tikka",
-                price: "Rs 520",
-                description: "Grilled cottage cheese with spices.",
-                category: "snacks",
-                tags: ["Vegetarian", "Grilled"],
-                image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&auto=format&fit=crop&q=80",
-                badge: "Vegetarian"
-            },
-            {
-                id: 14,
-                name: "Cold Coffee",
-                price: "Rs 220",
-                description: "Iced coffee with cream and chocolate.",
-                category: "drinks",
-                tags: ["Cold", "Creamy"],
-                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&auto=format&fit=crop&q=80",
-                badge: "Chilled"
-            },
-            {
-                id: 15,
-                name: "Gulab Jamun",
-                price: "Rs 180",
-                description: "Sweet milk balls in rose syrup.",
-                category: "dessert",
-                tags: ["Sweet", "Traditional"],
-                image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&auto=format&fit=crop&q=80",
-                badge: "Sweet"
-            },
-            {
-                id: 16,
-                name: "Chicken Biryani",
-                price: "Rs 580",
-                description: "Fragrant rice with chicken and spices.",
-                category: "lunch",
-                tags: ["Spicy", "Non-Veg"],
-                image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&auto=format&fit=crop&q=80",
-                badge: "Spicy"
-            },
-            {
-                id: 17,
-                name: "Aloo Paratha",
-                price: "Rs 350",
-                description: "Stuffed potato bread with yogurt.",
-                category: "breakfast",
-                tags: ["Vegetarian", "Hearty"],
-                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&auto=format&fit=crop&q=80",
-                badge: "Hearty"
-            },
-            {
-                id: 18,
-                name: "Samosa",
-                price: "Rs 250",
-                description: "Crispy pastry with spiced potatoes.",
-                category: "snacks",
-                tags: ["Crispy", "Vegetarian"],
-                image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop&q=80",
-                badge: "Crispy"
-            },
-            {
-                id: 19,
-                name: "Butter Chicken",
-                price: "Rs 720",
-                description: "Creamy tomato curry with chicken.",
-                category: "lunch",
-                tags: ["Creamy", "Non-Veg"],
-                image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&auto=format&fit=crop&q=80",
-                badge: "Creamy"
-            },
-            {
-                id: 20,
-                name: "Fresh Lemonade",
-                price: "Rs 150",
-                description: "Freshly squeezed lemon with mint.",
-                category: "drinks",
-                tags: ["Refreshing", "Fresh"],
-                image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400&auto=format&fit=crop&q=80",
-                badge: "Fresh"
-            }
-        ];
+// ---- PAGES ----
+function HomePage({setPage,setShowAuth}) {
+  return (
+    <div>
+      {/* HERO */}
+      <div className="hero">
+        <div className="hero-inner">
+          <div className="hero-badge">✦ PACFA Accredited · Melbourne, AU</div>
+          <h1 className="hero-title">A Safe Space for <em>Healing</em> & Growth</h1>
+          <p className="hero-desc">Compassionate, trauma-informed counselling for relationships, anxiety, and personal growth. You deserve support that truly sees you.</p>
+          <div className="hero-actions">
+            <button className="btn btn-dark" onClick={()=>setPage('booking')}>Book a Session →</button>
+            <button className="btn btn-outline" onClick={()=>setPage('about')}>Meet Your Therapist</button>
+          </div>
+          <div className="hero-trust">
+            {[['200+','Clients Supported'],['PACFA','Accredited'],['5★','Avg Rating'],['7+','Yrs Experience']].map(([n,l])=>(
+              <div key={l} className="trust-item"><span className="trust-num">{n}</span><span className="trust-lbl">{l}</span></div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuItemsContainer = document.getElementById('menuItemsContainer');
-            const categoryButtons = document.querySelectorAll('.category-btn');
-            
-            // Function to render menu items
-            function renderMenuItems(category = 'all') {
-                menuItemsContainer.innerHTML = '';
-                
-                // Filter items based on category
-                let itemsToShow = menuData;
-                if (category !== 'all') {
-                    itemsToShow = menuData.filter(item => item.category === category);
-                }
-                
-                // Show message if no items
-                if (itemsToShow.length === 0) {
-                    menuItemsContainer.innerHTML = `
-                        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-                            <h3 style="color: var(--primary); margin-bottom: 10px;">No items found in this category</h3>
-                            <p style="color: #666;">Please check back later or try another category.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Create HTML for each menu item with scroll animation
-                itemsToShow.forEach((item, index) => {
-                    const menuItem = document.createElement('div');
-                    menuItem.className = 'menu-item scroll-fade';
-                    menuItem.style.animationDelay = `${index * 0.1}s`;
-                    
-                    menuItem.innerHTML = `
-                        <div class="menu-item-img-container">
-                            <img src="${item.image}" alt="${item.name}" class="menu-item-img" loading="lazy">
-                            ${item.badge ? `<div class="menu-item-badge">${item.badge}</div>` : ''}
-                        </div>
-                        <div class="menu-item-content">
-                            <div class="menu-item-header">
-                                <h3 class="menu-item-title">${item.name}</h3>
-                                <span class="menu-item-price">${item.price}</span>
-                            </div>
-                            <p class="menu-item-desc">${item.description}</p>
-                            <div class="menu-item-tags">
-                                ${item.tags.map(tag => `<span class="menu-tag">${tag}</span>`).join('')}
-                            </div>
-                            <button class="menu-item-button" data-id="${item.id}">
-                                <i class="fas fa-shopping-cart"></i> Add to Order
-                            </button>
-                        </div>
-                    `;
-                    
-                    menuItemsContainer.appendChild(menuItem);
-                    
-                    // Add scroll animation to this item
-                    setTimeout(() => {
-                        const observer = new IntersectionObserver((entries) => {
-                            entries.forEach(entry => {
-                                if (entry.isIntersecting) {
-                                    entry.target.classList.add('visible');
-                                }
-                            });
-                        }, { threshold: 0.1 });
-                        
-                        observer.observe(menuItem);
-                    }, 100);
-                });
-                
-                // Add event listeners to order buttons
-                document.querySelectorAll('.menu-item-button').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const itemId = this.getAttribute('data-id');
-                        const item = menuData.find(i => i.id == itemId);
-                        
-                        // Button animation
-                        this.style.transform = 'scale(0.95)';
-                        this.innerHTML = '<i class="fas fa-check"></i> Added!';
-                        this.style.background = 'var(--success)';
-                        
-                        setTimeout(() => {
-                            this.style.transform = '';
-                            this.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Order';
-                            this.style.background = '';
-                        }, 1500);
-                        
-                        // Show notification
-                        showNotification(`${item.name} added to order!`);
-                    });
-                });
-            }
-            
-            // Initial render
-            renderMenuItems();
-            
-            // Add event listeners to category buttons
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    categoryButtons.forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Get category from data attribute
-                    const category = this.getAttribute('data-category');
-                    
-                    // Render items for this category
-                    renderMenuItems(category);
-                });
-            });
-            
-            // Mobile menu functionality
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const navLinks = document.getElementById('navLinks');
-            
-            if (mobileMenuBtn && navLinks) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    navLinks.classList.toggle('active');
-                    const icon = this.querySelector('i');
-                    if (navLinks.classList.contains('active')) {
-                        icon.classList.remove('fa-bars');
-                        icon.classList.add('fa-times');
-                    } else {
-                        icon.classList.remove('fa-times');
-                        icon.classList.add('fa-bars');
-                    }
-                });
-                
-                // Close mobile menu when clicking on a link
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.addEventListener('click', function() {
-                        navLinks.classList.remove('active');
-                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-                    });
-                });
-            }
-            
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        // Close mobile menu if open
-                        if (navLinks && navLinks.classList.contains('active')) {
-                            navLinks.classList.remove('active');
-                            mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                            mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-                        }
-                        
-                        const headerHeight = document.querySelector('header').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Header hide/show on scroll
-            let lastScrollTop = 0;
-            const header = document.getElementById('mainHeader');
-            
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    header.classList.add('hidden');
-                    header.classList.remove('visible');
-                } else {
-                    header.classList.remove('hidden');
-                    header.classList.add('visible');
-                }
-                
-                lastScrollTop = scrollTop;
-            });
-            
-            // Scroll animation observer
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-            
-            // Observe all elements with scroll-fade class
-            document.querySelectorAll('.scroll-fade').forEach(el => {
-                scrollObserver.observe(el);
-            });
-            
-            // Notification function
-            function showNotification(message) {
-                const notification = document.createElement('div');
-                notification.className = 'notification';
-                notification.innerHTML = `
-                    <i class="fas fa-check-circle"></i>
-                    <span>${message}</span>
-                `;
-                
-                document.body.appendChild(notification);
-                
-                // Show notification
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(0)';
-                    if (window.innerWidth <= 768) {
-                        notification.style.transform = 'translateY(0)';
-                    }
-                }, 10);
-                
-                // Hide after 3 seconds
-                setTimeout(() => {
-                    notification.style.transform = 'translateX(150%)';
-                    if (window.innerWidth <= 768) {
-                        notification.style.transform = 'translateY(-150%)';
-                    }
-                    setTimeout(() => {
-                        document.body.removeChild(notification);
-                    }, 600);
-                }, 3000);
-            }
-            
-            // Handle image loading errors
-            document.querySelectorAll('.menu-item-img').forEach(img => {
-                img.addEventListener('error', function() {
-                    this.src = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&auto=format&fit=crop&q=80';
-                    this.alt = 'Delicious Food';
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+      {/* SERVICES */}
+      <section className="section services-section">
+        <div className="sec-hdr">
+          <span className="sec-label">What We Offer</span>
+          <h2 className="sec-title">Specialised Support for Your Journey</h2>
+          <p className="sec-sub">Every person's path to healing is unique. Explore our specialisations to find the right fit for you.</p>
+        </div>
+        <div className="services-grid">
+          {SVCS.map((s,i)=>(
+            <div key={i} className="svc-card">
+              <div className="svc-icon">{s.icon}</div>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+              <div className="tags">{s.tags.map(t=><span key={t} className="tag">{t}</span>)}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ABOUT STRIP */}
+      <section className="section">
+        <div className="about-strip">
+          <div className="about-frame-wrap" style={{position:'relative'}}>
+            <div className="about-frame"><span>👩‍⚕️</span></div>
+            <div className="about-badge" style={{position:'absolute',bottom:'-16px',left:'-16px'}}>
+              <div className="badge-t">PACFA Accredited</div><div className="badge-s">Reg. No. 29541</div>
+            </div>
+            <div className="about-badge" style={{position:'absolute',top:'16px',right:'-16px'}}>
+              <div className="badge-t">7+ Years</div><div className="badge-s">Clinical Experience</div>
+            </div>
+          </div>
+          <div>
+            <span className="sec-label">About Your Therapist</span>
+            <h2 className="sec-title">Healing Begins With Being Truly Heard</h2>
+            <p className="sec-sub">I'm a PACFA-registered counsellor based in Melbourne, specialising in trauma, relationships, anxiety, and youth mental health. My approach is warm, evidence-based, and centred around you.</p>
+            <ul className="creds">
+              {['PACFA Accredited Counsellor','Trauma-Informed Practice Certified','7+ Years Clinical Experience','Online & In-Person Sessions Available','Medicare Rebates Available'].map(c=>(
+                <li key={c} className="cred"><span className="cred-dot"/>{c}</li>
+              ))}
+            </ul>
+            <button className="btn btn-dark" onClick={()=>setPage('about')}>Read My Full Story</button>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="testi-section">
+        <div className="sec-hdr">
+          <span className="sec-label" style={{color:'var(--rose-light)'}}>Client Voices</span>
+          <h2 className="sec-title" style={{color:'white'}}>Stories of Healing & Transformation</h2>
+          <p className="sec-sub" style={{color:'rgba(255,255,255,0.5)',margin:'0 auto'}}>Real experiences from people who took the courageous step toward healing.</p>
+        </div>
+        <div className="testi-grid">
+          {TESTIS.map((t,i)=>(
+            <div key={i} className="testi-card">
+              <div className="stars">★★★★★</div>
+              <p className="testi-text">{t.text}</p>
+              <div className="testi-author">
+                <div className="testi-av">{t.init}</div>
+                <div><div className="testi-name">{t.name}</div><div className="testi-role">{t.role}</div></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <div className="cta-strip" style={{margin:'5rem 6%'}}>
+        <h2>Ready to Begin Your Healing Journey?</h2>
+        <p>Taking the first step is often the hardest. Book a free 15-minute consultation — no commitment, just a conversation.</p>
+        <div className="cta-actions">
+          <button className="btn btn-dark" onClick={()=>setPage('booking')}>Book a Free Consultation</button>
+          <button className="btn btn-outline" onClick={()=>setPage('contact')}>Ask a Question First</button>
+        </div>
+      </div>
+
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
+
+function AboutPage({setPage}) {
+  return (
+    <div>
+      <section className="section" style={{background:'var(--cream)'}}>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'5rem',alignItems:'center'}} className="about-hero-grid">
+          <div>
+            <span className="sec-label">My Story</span>
+            <h1 className="sec-title">A Therapist Who Has Walked Her Own Path</h1>
+            {["I'm a PACFA-accredited counsellor based in Melbourne, and I believe that healing happens when someone truly sees you — not your diagnosis, not your history, but you.",
+              "My journey into counselling began from a deeply personal place. Having navigated my own experiences of anxiety and relational challenges, I found therapy to be a profound turning point. That experience inspired me to dedicate my career to offering others the same gift.",
+              "I hold a Master of Counselling and have worked across community health, private practice, and youth services in Melbourne. I specialise in trauma, relationships, anxiety, and youth mental health.",
+              "My approach is warm, direct, and deeply human. I integrate multiple evidence-based modalities, but above all, I believe the therapeutic relationship itself is the most powerful tool for healing."].map((p,i)=>(
+              <p key={i} style={{fontSize:'0.9rem',color:'var(--text-soft)',lineHeight:'1.9',marginBottom:'1rem'}}>{p}</p>
+            ))}
+            <button className="btn btn-dark" style={{marginTop:'0.8rem'}} onClick={()=>setPage('booking')}>Book a Session →</button>
+          </div>
+          <div>
+            <div className="about-frame" style={{height:'460px',borderRadius:'28px',marginBottom:'1.5rem'}}>👩‍⚕️</div>
+            <div className="values-grid">
+              {[{icon:'🤝',t:'Empathy First',d:'Every session begins with compassion and genuine curiosity.'},
+                {icon:'🔒',t:'Safe & Confidential',d:'Your privacy and safety are paramount. Judgement-free.'},
+                {icon:'🧬',t:'Evidence-Based',d:'Grounded in proven therapeutic modalities.'},
+                {icon:'🌱',t:'Growth-Oriented',d:'We work toward lasting change, not just symptom management.'}].map((v,i)=>(
+                <div key={i} className="val-card">
+                  <div className="val-icon">{v.icon}</div>
+                  <div className="val-t">{v.t}</div>
+                  <div className="val-d">{v.d}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section">
+        <div className="sec-hdr">
+          <span className="sec-label">Therapeutic Approach</span>
+          <h2 className="sec-title">The Modalities I Draw Upon</h2>
+          <p className="sec-sub">Trained in a range of evidence-based approaches, allowing me to tailor sessions to what's right for you.</p>
+        </div>
+        <div className="modalities-grid">
+          {[['01','Person-Centred Therapy','Placing you at the core of your therapeutic journey with unconditional positive regard.'],
+            ['02','Cognitive Behavioural Therapy','Identifying and reshaping unhelpful thought patterns that drive distress.'],
+            ['03','EMDR','Eye Movement Desensitisation and Reprocessing for trauma and PTSD treatment.'],
+            ['04','Attachment Theory','Exploring how early relationships shape our present relational patterns.'],
+            ['05','Somatic Therapy','Reconnecting with the body to release trauma held in physical sensation.'],
+            ['06','Mindfulness-Based Therapy','Present-moment awareness practices to reduce anxiety and stress responses.']].map(([n,t,d])=>(
+            <div key={n} className="mod-card">
+              <div className="mod-num">{n}</div>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
+
+function ServicesPage({setPage}) {
+  const [tab,setTab] = useState('services');
+  const plans = [
+    {type:'Individual',price:'180',per:'per 50-min session',feats:['One-on-one session','Online or in-person','Secure intake forms','Session notes provided','Medicare rebate eligible'],featured:false},
+    {type:'Couples',price:'220',per:'per 60-min session',feats:['Joint couples session','Communication focus','Conflict resolution tools','Follow-up resources','Online or in-person'],featured:true,badge:'Most Popular'},
+    {type:'Youth (12–25)',price:'150',per:'per 50-min session',feats:['Specialised youth approach','Creative modalities','Parent liaison option','School support letters','Sliding scale available'],featured:false},
+  ];
+  return (
+    <div>
+      <section className="section">
+        <div className="sec-hdr">
+          <span className="sec-label">What We Offer</span>
+          <h1 className="sec-title">Therapeutic Services</h1>
+          <p className="sec-sub">Each service is tailored to your unique needs, drawing on evidence-based approaches and genuine care.</p>
+          <div style={{display:'flex',gap:'0.5rem',justifyContent:'center',marginTop:'1.2rem'}}>
+            {['services','pricing'].map(t=>(
+              <button key={t} className={`cat-btn${tab===t?' act':''}`} onClick={()=>setTab(t)}>{t==='services'?'Our Services':'Pricing & Fees'}</button>
+            ))}
+          </div>
+        </div>
+        {tab==='services' && (
+          <div className="svc-detail-grid">
+            {SVCS.map((s,i)=>(
+              <div key={i} className="svc-detail-card">
+                <div style={{fontSize:'2rem',marginBottom:'0.8rem'}}>{s.icon}</div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+                <p style={{fontSize:'0.82rem',color:'var(--text-soft)',lineHeight:'1.7'}}>Sessions are 50 minutes and can be conducted online or in-person at our Melbourne rooms.</p>
+                <div className="tags" style={{margin:'0.8rem 0'}}>{s.tags.map(t=><span key={t} className="tag">{t}</span>)}</div>
+                <button className="btn btn-dark btn-sm" onClick={()=>setPage('booking')}>Book This Service</button>
+              </div>
+            ))}
+          </div>
+        )}
+        {tab==='pricing' && (
+          <div>
+            <div className="pricing-grid">
+              {plans.map((p,i)=>(
+                <div key={i} className={`price-card${p.featured?' featured':''}`}>
+                  {p.badge && <div className="price-badge">{p.badge}</div>}
+                  <div className="price-type">{p.type}</div>
+                  <div className="price-val"><sup>$</sup>{p.price}</div>
+                  <div className="price-per">{p.per}</div>
+                  <ul className="price-features">{p.feats.map((f,j)=><li key={j}>{f}</li>)}</ul>
+                  <button className={`btn ${p.featured?'btn-rose':'btn-outline'} btn-full`} onClick={()=>setPage('booking')}>Book Now</button>
+                </div>
+              ))}
+            </div>
+            <p style={{textAlign:'center',marginTop:'1.5rem',fontSize:'0.8rem',color:'var(--text-muted)'}}>
+              💛 Medicare rebates available with a Mental Health Care Plan. Ask us about bulk billing options.
+            </p>
+          </div>
+        )}
+      </section>
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
+
+function BookingPage({setPage,showToast,user}) {
+  const [step,setStep]=useState(1);
+  const [selDate,setSelDate]=useState(null);
+  const [selTime,setSelTime]=useState(null);
+  const [selType,setSelType]=useState('Individual Online');
+  const [month,setMonth]=useState(2);
+  const [year,setYear]=useState(2026);
+  const [form,setForm]=useState({name:user?.name||'',email:user?.email||'',phone:'',notes:'',consent:false});
+  const days = new Date(year,month+1,0).getDate();
+  const firstDay = new Date(year,month,1).getDay();
+  const today = new Date();
+  const handleBook=()=>{
+    if(!form.name||!form.email){showToast('Please fill in all required fields','error');return;}
+    if(!form.consent){showToast('Please confirm consent to proceed','error');return;}
+    setStep(3); showToast('Booking confirmed! Check your email.','success');
+  };
+  return (
+    <div>
+      <div className="booking-wrap">
+        <div className="sec-hdr">
+          <span className="sec-label">Online Booking</span>
+          <h1 className="sec-title">Book Your Session</h1>
+          <p className="sec-sub" style={{margin:'0 auto'}}>Choose your preferred time and session type. Secure, simple, and instant.</p>
+        </div>
+        <div className="steps">
+          {[{n:1,l:'Date & Time'},{n:2,l:'Your Details'},{n:3,l:'Confirmed'}].map(s=>(
+            <div key={s.n} className={`step${step===s.n?' active':''}${step>s.n?' done':''}`}>
+              <div className="step-n">{step>s.n?'✓':s.n}</div>
+              <div className="step-l">{s.l}</div>
+            </div>
+          ))}
+        </div>
+        {step===1 && (
+          <div className="book-grid">
+            <div className="book-panel">
+              <div className="cal-hdr">
+                <button className="cal-nav" onClick={()=>month===0?setMonth(11)||setYear(y=>y-1):setMonth(m=>m-1)}>‹</button>
+                <span className="cal-title">{MONTHS[month]} {year}</span>
+                <button className="cal-nav" onClick={()=>month===11?setMonth(0)||setYear(y=>y+1):setMonth(m=>m+1)}>›</button>
+              </div>
+              <div className="cal-days">
+                {DNAMES.map(d=><div key={d} className="cal-day-lbl">{d}</div>)}
+                {Array.from({length:firstDay},(_,i)=><div key={`e${i}`} className="cal-day empty"/>)}
+                {Array.from({length:days},(_,i)=>{
+                  const d=i+1;
+                  const isPast=new Date(year,month,d)<today&&new Date(year,month,d).toDateString()!==today.toDateString();
+                  const isToday=new Date(year,month,d).toDateString()===today.toDateString();
+                  return <button key={d} className={`cal-day${isPast?' past':''}${isToday?' today':''}${selDate===d&&!isPast?' sel':''}`} onClick={()=>!isPast&&setSelDate(d)}>{d}</button>;
+                })}
+              </div>
+              {selDate && <>
+                <div className="panel-t" style={{marginTop:'1.2rem'}}>Available Times</div>
+                <div className="time-slots">
+                  {TSLOTS.map(t=><button key={t} className={`ts${BOOKED.includes(t)?' booked':''}${selTime===t?' sel':''}`} onClick={()=>!BOOKED.includes(t)&&setSelTime(t)}>{t}</button>)}
+                </div>
+              </>}
+            </div>
+            <div>
+              <div className="book-panel" style={{marginBottom:'1rem'}}>
+                <div className="panel-t">Session Type</div>
+                <div className="st-grid">
+                  {STYPES.map(s=>(
+                    <button key={s.label} className={`st-btn${selType===s.label?' sel':''}`} onClick={()=>setSelType(s.label)}>
+                      <span className="st-icon">{s.icon}</span>
+                      <div className="st-lbl">{s.label}</div>
+                      <div className="st-price">{s.price}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {selDate&&selTime ? (
+                <div className="book-panel">
+                  <div className="panel-t">Your Selection</div>
+                  <div className="book-summary">
+                    {[['Date',`${MONTHS[month]} ${selDate}, ${year}`],['Time',selTime],['Session',selType],['Duration','50 min'],['Total',STYPES.find(s=>s.label===selType)?.price||'$180']].map(([l,v])=>(
+                      <div key={l} className="sum-row"><span className="sum-l">{l}</span><span className="sum-v">{v}</span></div>
+                    ))}
+                  </div>
+                  <button className="btn btn-dark btn-full" style={{marginTop:'0.9rem'}} onClick={()=>setStep(2)}>Continue →</button>
+                </div>
+              ) : <p style={{fontSize:'0.82rem',color:'var(--text-muted)',textAlign:'center',marginTop:'2rem'}}>← Select a date and time to continue</p>}
+            </div>
+          </div>
+        )}
+        {step===2 && (
+          <div className="book-panel" style={{maxWidth:'540px',margin:'0 auto'}}>
+            <div className="panel-t" style={{fontSize:'1.25rem',marginBottom:'1.2rem'}}>Your Details</div>
+            <div className="frow">
+              <div className="fg"><label className="fl">Full Name *</label><input className="fi" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Jane Smith"/></div>
+              <div className="fg"><label className="fl">Email *</label><input className="fi" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="jane@email.com"/></div>
+            </div>
+            <div className="frow">
+              <div className="fg"><label className="fl">Phone</label><input className="fi" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="04XX XXX XXX"/></div>
+              <div className="fg"><label className="fl">Session Type</label>
+                <select className="fs" value={selType} onChange={e=>setSelType(e.target.value)}>
+                  {STYPES.map(s=><option key={s.label}>{s.label}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="fg"><label className="fl">What brings you to counselling?</label><textarea className="fta" value={form.notes} onChange={e=>setForm({...form,notes:e.target.value})} placeholder="Briefly share what you'd like to work on..."/></div>
+            <label className="fchk"><input type="checkbox" checked={form.consent} onChange={e=>setForm({...form,consent:e.target.checked})}/>I consent to my information being used for booking purposes per the privacy policy.</label>
+            <div style={{display:'flex',gap:'0.8rem'}}>
+              <button className="btn btn-outline" onClick={()=>setStep(1)}>← Back</button>
+              <button className="btn btn-dark" onClick={handleBook}>Confirm Booking →</button>
+            </div>
+          </div>
+        )}
+        {step===3 && (
+          <div className="book-panel" style={{maxWidth:'540px',margin:'0 auto'}}>
+            <div className="confirm-wrap">
+              <div className="confirm-icon">🌸</div>
+              <div className="confirm-title">You're All Set!</div>
+              <p style={{color:'var(--text-soft)',fontSize:'0.9rem'}}>Your session has been booked. A confirmation email is on its way to <strong>{form.email}</strong>.</p>
+              <div className="confirm-detail">
+                {[['📅 Date',`${MONTHS[month]} ${selDate}, ${year}`],['⏰ Time',selTime],['💼 Session',selType],['👤 Name',form.name],['💳 Fee',STYPES.find(s=>s.label===selType)?.price]].map(([l,v])=>(
+                  <div key={l} className="sum-row"><span className="sum-l">{l}</span><span className="sum-v">{v}</span></div>
+                ))}
+              </div>
+              <p style={{fontSize:'0.76rem',color:'var(--text-muted)',marginBottom:'1.2rem'}}>💡 You'll receive a reminder 24 hours before your appointment.</p>
+              <button className="btn btn-dark" onClick={()=>setPage('home')}>Back to Home</button>
+            </div>
+          </div>
+        )}
+      </div>
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
+
+function BlogPage({setPage}) {
+  const [cat,setCat]=useState('All');
+  const cats=['All','Anxiety','Relationships','Trauma','Self-Care','Youth'];
+  const filtered=cat==='All'?BLOGS:BLOGS.filter(b=>b.cat===cat);
+  return (
+    <div>
+      <section className="section">
+        <div className="sec-hdr">
+          <span className="sec-label">Resources & Insights</span>
+          <h1 className="sec-title">Mental Health Blog</h1>
+          <p className="sec-sub">Practical guidance, honest conversations, and expert insights for your wellbeing journey.</p>
+        </div>
+        <div className="blog-cats">{cats.map(c=><button key={c} className={`cat-btn${cat===c?' act':''}`} onClick={()=>setCat(c)}>{c}</button>)}</div>
+        <div className="blog-grid">
+          {filtered.map((b,i)=>(
+            <div key={i} className="blog-card">
+              <div className="blog-img" style={{background:b.bg}}>{b.icon}</div>
+              <div className="blog-body">
+                <div className="blog-cat">{b.cat}</div>
+                <div className="blog-title">{b.title}</div>
+                <div className="blog-exc">{b.exc}</div>
+                <div className="blog-meta"><span>🌸 Shine</span><span>{b.date}</span><span>📖 {b.read}</span></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <div className="cta-strip" style={{margin:'0 6% 5rem'}}>
+        <h2>Get Wellbeing Insights in Your Inbox</h2>
+        <p>Monthly mental health tips and updates from Shine Counselling. No spam, ever.</p>
+        <div style={{display:'flex',gap:'0.7rem',justifyContent:'center',flexWrap:'wrap',marginTop:'1rem'}}>
+          <input className="fi" placeholder="Enter your email" style={{maxWidth:'280px',margin:0}}/>
+          <button className="btn btn-dark">Subscribe</button>
+        </div>
+      </div>
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
+
+function ContactPage({setPage,showToast}) {
+  const [form,setForm]=useState({name:'',email:'',phone:'',subject:'',message:''});
+  const submit=()=>{
+    if(!form.name||!form.email||!form.message){showToast('Please fill in all required fields','error');return;}
+    showToast("Message sent! We'll be in touch within 24 hours.",'success');
+    setForm({name:'',email:'',phone:'',subject:'',message:''});
+  };
+  return (
+    <div>
+      <section className="section">
+        <div className="sec-hdr">
+          <span className="sec-label">Get in Touch</span>
+          <h1 className="sec-title">We'd Love to Hear From You</h1>
+          <p className="sec-sub">Whether you have questions, want to check availability, or just need to say hello.</p>
+        </div>
+        <div className="contact-grid">
+          <div>
+            {[{icon:'📍',t:'Location',p:'Melbourne, VIC, Australia\nSessions in Fitzroy & online'},{icon:'📞',t:'Phone',p:'(03) 9XXX XXXX\nMon–Fri 9am–6pm AEST'},{icon:'📧',t:'Email',p:'hello@shinecounselling.com.au\nWe respond within 24 hours'},{icon:'📱',t:'Instagram',p:'@shine_counsellingservices\n1,187 followers'}].map((item,i)=>(
+              <div key={i} className="contact-item">
+                <div className="contact-icon">{item.icon}</div>
+                <div><h4>{item.t}</h4><p style={{whiteSpace:'pre-line'}}>{item.p}</p></div>
+              </div>
+            ))}
+            <div className="map-box"><span>🗺️</span><span className="map-lbl">Fitzroy VIC 3065, Melbourne</span></div>
+          </div>
+          <div className="contact-form-card">
+            <h3 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'1.45rem',fontWeight:400,marginBottom:'1.3rem',color:'var(--text-dark)'}}>Send a Message</h3>
+            <div className="frow">
+              <div className="fg"><label className="fl">Full Name *</label><input className="fi" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Jane Smith"/></div>
+              <div className="fg"><label className="fl">Email *</label><input className="fi" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="jane@email.com"/></div>
+            </div>
+            <div className="frow">
+              <div className="fg"><label className="fl">Phone</label><input className="fi" value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="04XX XXX XXX"/></div>
+              <div className="fg"><label className="fl">Subject</label>
+                <select className="fs" value={form.subject} onChange={e=>setForm({...form,subject:e.target.value})}>
+                  <option value="">Select a topic</option>
+                  {['Book a Session','Fee Enquiry','General Question','Other'].map(o=><option key={o}>{o}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="fg"><label className="fl">Message *</label><textarea className="fta" value={form.message} onChange={e=>setForm({...form,message:e.target.value})} placeholder="How can we help you?"/></div>
+            <button className="btn btn-dark" onClick={submit}>Send Message →</button>
+          </div>
+        </div>
+      </section>
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
+
+function AuthModal({onClose,onAuth}) {
+  const [tab,setTab]=useState('login');
+  const [form,setForm]=useState({name:'',email:'',password:''});
+  const submit=()=>{
+    if(!form.email||!form.password)return;
+    const role=form.email.includes('admin')?'admin':'client';
+    onAuth({name:form.name||form.email.split('@')[0],email:form.email,role});
+    onClose();
+  };
+  return (
+    <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+      <div className="modal-box">
+        <button className="modal-close" onClick={onClose}>✕</button>
+        <div className="modal-logo">✦ Shine Counselling</div>
+        <div className="modal-tabs">
+          {['login','signup'].map(t=><button key={t} className={`modal-tab${tab===t?' act':''}`} onClick={()=>setTab(t)}>{t==='login'?'Sign In':'Create Account'}</button>)}
+        </div>
+        {tab==='signup'&&<div className="fg"><label className="fl">Full Name</label><input className="fi" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} placeholder="Jane Smith"/></div>}
+        <div className="fg"><label className="fl">Email Address</label><input className="fi" type="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="you@email.com"/></div>
+        <div className="fg"><label className="fl">Password</label><input className="fi" type="password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} placeholder="••••••••"/></div>
+        <button className="btn btn-dark btn-full" onClick={submit}>{tab==='login'?'Sign In →':'Create Account →'}</button>
+        <div className="modal-hint">Use <strong>admin@shine.com</strong> for admin · Any other email for client portal</div>
+      </div>
+    </div>
+  );
+}
+
+// ---- DASHBOARDS ----
+function ClientDashboard({user,setPage,setUser}) {
+  const [sec,setSec]=useState('overview');
+  const [pf,setPf]=useState({name:user.name,email:user.email,phone:'0412 345 678',dob:'01/01/1990',notes:'Working on anxiety and workplace stress.'});
+  const navItems=[{id:'overview',icon:'◈',l:'Overview'},{id:'bookings',icon:'📅',l:'Bookings'},{id:'payments',icon:'💳',l:'Payments'},{id:'profile',icon:'👤',l:'Profile'}];
+  const myBookings=BOOKINGS_D.slice(0,3);
+
+  const body=()=>{
+    if(sec==='overview') return <>
+      <div className="stat-grid">
+        {[{i:'📅',v:'3',l:'Upcoming',c:'+1 this week'},{i:'✅',v:'12',l:'Completed',c:'Since Mar 2025'},{i:'💛',v:'4',l:'Weeks Active',c:'Great progress!'},{i:'💳',v:'$540',l:'Total Invested',c:'In your wellbeing'}].map((s,i)=>(
+          <div key={i} className="stat-card"><div className="stat-icon">{s.i}</div><div className="stat-val">{s.v}</div><div className="stat-lbl">{s.l}</div><div className="stat-chg">{s.c}</div></div>
+        ))}
+      </div>
+      <div className="dash-card">
+        <div className="dash-card-t">Upcoming Sessions <button className="btn btn-rose btn-sm" onClick={()=>setPage('booking')}>+ Book New</button></div>
+        {[{day:18,mon:'MAR',t:'Individual Therapy (Online)',time:'10:00 AM – 10:50 AM'},{day:25,mon:'MAR',t:'Individual Therapy (Online)',time:'10:00 AM – 10:50 AM'},{day:1,mon:'APR',t:'Individual Therapy (In-Person)',time:'2:00 PM – 2:50 PM'}].map((s,i)=>(
+          <div key={i} className="up-session">
+            <div className="sess-date"><div className="sess-day">{s.day}</div><div className="sess-mon">{s.mon}</div></div>
+            <div className="sess-div"/>
+            <div className="sess-info"><div className="sess-type">{s.t}</div><div className="sess-time">🕙 {s.time}</div></div>
+            <div className="sess-acts"><button className="abtn">Reschedule</button><button className="abtn del">Cancel</button></div>
+          </div>
+        ))}
+      </div>
+    </>;
+    if(sec==='bookings') return (
+      <div className="dash-card">
+        <div className="dash-card-t">All Bookings</div>
+        <table className="dtable">
+          <thead><tr><th>Date</th><th>Time</th><th>Type</th><th>Mode</th><th>Status</th><th>Fee</th></tr></thead>
+          <tbody>{myBookings.map((b,i)=><tr key={i}><td>{b.date}</td><td>{b.time}</td><td>{b.type}</td><td>{b.mode}</td><td><Stt s={b.status}/></td><td><strong>{b.fee}</strong></td></tr>)}</tbody>
+        </table>
+      </div>
+    );
+    if(sec==='payments') return (
+      <div className="dash-card">
+        <div className="dash-card-t">Payment History</div>
+        <table className="dtable">
+          <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th>Method</th></tr></thead>
+          <tbody>{PAYMENTS_D.slice(0,4).map((p,i)=><tr key={i}><td>{p.id}</td><td>{p.date}</td><td><strong>{p.amount}</strong></td><td><Stt s={p.status}/></td><td>{p.method}</td></tr>)}</tbody>
+        </table>
+      </div>
+    );
+    if(sec==='profile') return (
+      <div className="dash-card" style={{maxWidth:'560px'}}>
+        <div className="dash-card-t">My Profile</div>
+        <div className="frow"><div className="fg"><label className="fl">Full Name</label><input className="fi" value={pf.name} onChange={e=>setPf({...pf,name:e.target.value})}/></div><div className="fg"><label className="fl">Email</label><input className="fi" value={pf.email} onChange={e=>setPf({...pf,email:e.target.value})}/></div></div>
+        <div className="frow"><div className="fg"><label className="fl">Phone</label><input className="fi" value={pf.phone} onChange={e=>setPf({...pf,phone:e.target.value})}/></div><div className="fg"><label className="fl">Date of Birth</label><input className="fi" value={pf.dob} onChange={e=>setPf({...pf,dob:e.target.value})}/></div></div>
+        <div className="fg"><label className="fl">Notes for Therapist</label><textarea className="fta" value={pf.notes} onChange={e=>setPf({...pf,notes:e.target.value})}/></div>
+        <button className="btn btn-dark">Save Changes</button>
+      </div>
+    );
+  };
+
+  return (
+    <div className="dash-layout">
+      <div className="dash-sidebar">
+        <div className="dash-logo">✦ Shine</div>
+        <div className="dash-role">Client Portal</div>
+        {navItems.map(n=><button key={n.id} className={`dash-nav${sec===n.id?' act':''}`} onClick={()=>setSec(n.id)}><span>{n.icon}</span>{n.l}</button>)}
+        <div style={{marginTop:'2rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+          <button className="dash-nav" onClick={()=>setPage('booking')}><span>+</span>Book Session</button>
+          <button className="dash-nav" onClick={()=>{setUser(null);setPage('home');}}><span>→</span>Sign Out</button>
+        </div>
+      </div>
+      <div className="dash-main">
+        <div className="dash-hdr"><div className="dash-greeting">Good day, {user.name} 🌸</div><div className="dash-date">Tuesday, 17 March 2026</div></div>
+        {body()}
+      </div>
+    </div>
+  );
+}
+
+function AdminPanel({user,setUser,setPage}) {
+  const [sec,setSec]=useState('overview');
+  const [clients,setClients]=useState(CLIENTS_D);
+  const [bookings,setBookings]=useState(BOOKINGS_D);
+  const [searchQ,setSearchQ]=useState('');
+  const [showAdd,setShowAdd]=useState(false);
+  const [avail,setAvail]=useState([true,true,true,true,true,false,false]);
+  const [emails,setEmails]=useState([
+    {t:'Booking Confirmation',d:'Sent when a booking is made',on:true},
+    {t:'Session Reminder (24h)',d:'Sent 24 hours before each session',on:true},
+    {t:'Session Reminder (1h)',d:'Sent 1 hour before each session',on:false},
+    {t:'Cancellation Notice',d:'Sent when a booking is cancelled',on:true},
+    {t:'Follow-up Care',d:'Sent 48 hours after each session',on:false},
+    {t:'Invoice & Receipt',d:'Sent after payment is processed',on:true},
+  ]);
+  const [newC,setNewC]=useState({name:'',email:'',phone:'',issue:''});
+  const [heroText,setHeroText]=useState('A Safe Space for Healing & Growth');
+  const [cmsPosts,setCmsPosts]=useState(BLOGS.map((b,i)=>({...b,id:i,pub:i<4})));
+  const DAYS_W=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const chartData=[{l:'Nov',v:3200},{l:'Dec',v:4100},{l:'Jan',v:3800},{l:'Feb',v:5200},{l:'Mar',v:4700}];
+  const maxV=Math.max(...chartData.map(d=>d.v));
+  const navItems=[{id:'overview',i:'◈',l:'Overview'},{id:'clients',i:'👥',l:'Clients'},{id:'bookings',i:'📅',l:'Bookings'},{id:'payments',i:'💳',l:'Payments'},{id:'availability',i:'🗓️',l:'Availability'},{id:'cms',i:'📝',l:'Content (CMS)'},{id:'comms',i:'📩',l:'Communications'}];
+  const fClients=clients.filter(c=>c.name.toLowerCase().includes(searchQ.toLowerCase())||c.email.toLowerCase().includes(searchQ.toLowerCase()));
+
+  const addClient=()=>{
+    if(!newC.name||!newC.email)return;
+    setClients([...clients,{id:clients.length+1,...newC,sessions:0,status:'New',last:'Today',issue:newC.issue||'General MH'}]);
+    setNewC({name:'',email:'',phone:'',issue:''});setShowAdd(false);
+  };
+
+  const body=()=>{
+    if(sec==='overview') return <>
+      <div className="stat-grid">
+        {[{i:'👥',v:clients.length,l:'Total Clients',c:`+${clients.filter(c=>c.status==='New').length} new`},{i:'📅',v:bookings.filter(b=>b.status==='Confirmed').length,l:'Confirmed',c:'This week'},{i:'💰',v:'$4,700',l:'Revenue (Mar)',c:'+12% vs last'},{i:'⭐',v:'5.0',l:'Avg Rating',c:'47 reviews'}].map((s,i)=>(
+          <div key={i} className="stat-card"><div className="stat-icon">{s.i}</div><div className="stat-val">{s.v}</div><div className="stat-lbl">{s.l}</div><div className="stat-chg">{s.c}</div></div>
+        ))}
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1.2rem'}}>
+        <div className="dash-card">
+          <div className="dash-card-t">Monthly Revenue</div>
+          <div className="revenue-chart">
+            {chartData.map((d,i)=>(
+              <div key={i} className="chart-bar-w">
+                <div className="chart-bar-val">${(d.v/1000).toFixed(1)}k</div>
+                <div className="chart-bar" style={{height:`${(d.v/maxV)*100}%`}}/>
+                <div className="chart-bar-lbl">{d.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="dash-card">
+          <div className="dash-card-t">Session Types</div>
+          {[['Individual Therapy',68],['Couples Counselling',20],['Youth Support',12]].map(([l,pct])=>(
+            <div key={l} className="prog-wrap">
+              <div className="prog-lbl"><span>{l}</span><span>{pct}%</span></div>
+              <div className="prog-track"><div className="prog-fill" style={{width:`${pct}%`}}/></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="dash-card">
+        <div className="dash-card-t">Today's Schedule</div>
+        {bookings.filter(b=>b.status==='Confirmed').slice(0,4).map((b,i)=>(
+          <div key={i} className="up-session">
+            <div style={{fontSize:'0.78rem',color:'var(--rose)',fontWeight:600,minWidth:'65px'}}>{b.time}</div>
+            <div className="sess-div"/>
+            <div className="sess-info"><div className="sess-type">{b.client}</div><div className="sess-time">{b.type} · {b.mode}</div></div>
+            <Stt s={b.status}/>
+          </div>
+        ))}
+      </div>
+    </>;
+
+    if(sec==='clients') return <>
+      <div className="dash-card">
+        <div className="dash-card-t">
+          <div style={{display:'flex',alignItems:'center',gap:'0.8rem'}}>
+            Client Management
+            <div className="search-wrap"><span>🔍</span><input value={searchQ} onChange={e=>setSearchQ(e.target.value)} placeholder="Search clients..."/></div>
+          </div>
+          <button className="btn btn-rose btn-sm" onClick={()=>setShowAdd(true)}>+ Add Client</button>
+        </div>
+        <table className="dtable">
+          <thead><tr><th>Client</th><th>Email</th><th>Speciality</th><th>Sessions</th><th>Status</th><th>Last</th><th>Actions</th></tr></thead>
+          <tbody>{fClients.map(c=>(
+            <tr key={c.id}><td><strong>{c.name}</strong></td><td style={{fontSize:'0.76rem'}}>{c.email}</td><td>{c.issue}</td><td>{c.sessions}</td>
+              <td><Stt s={c.status}/></td><td>{c.last}</td>
+              <td><div className="tbl-acts">
+                <button className="icon-btn" title="View">👁️</button>
+                <button className="icon-btn" title="Edit">✏️</button>
+                <button className="icon-btn del" title="Delete" onClick={()=>setClients(clients.filter(x=>x.id!==c.id))}>🗑️</button>
+              </div></td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+      {showAdd && (
+        <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&setShowAdd(false)}>
+          <div className="modal-box">
+            <button className="modal-close" onClick={()=>setShowAdd(false)}>✕</button>
+            <h3 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'1.4rem',marginBottom:'1.2rem'}}>Add New Client</h3>
+            <div className="frow">
+              <div className="fg"><label className="fl">Full Name *</label><input className="fi" value={newC.name} onChange={e=>setNewC({...newC,name:e.target.value})} placeholder="Jane Smith"/></div>
+              <div className="fg"><label className="fl">Email *</label><input className="fi" value={newC.email} onChange={e=>setNewC({...newC,email:e.target.value})} placeholder="jane@email.com"/></div>
+            </div>
+            <div className="frow">
+              <div className="fg"><label className="fl">Phone</label><input className="fi" value={newC.phone} onChange={e=>setNewC({...newC,phone:e.target.value})}/></div>
+              <div className="fg"><label className="fl">Primary Concern</label>
+                <select className="fs" value={newC.issue} onChange={e=>setNewC({...newC,issue:e.target.value})}>
+                  <option value="">Select</option>
+                  {['Anxiety','Relationships','Trauma','Youth','Depression','General MH'].map(o=><option key={o}>{o}</option>)}
+                </select>
+              </div>
+            </div>
+            <button className="btn btn-dark" onClick={addClient}>Add Client</button>
+          </div>
+        </div>
+      )}
+    </>;
+
+    if(sec==='bookings') return (
+      <div className="dash-card">
+        <div className="dash-card-t">Booking Management</div>
+        <table className="dtable">
+          <thead><tr><th>Client</th><th>Date</th><th>Time</th><th>Type</th><th>Mode</th><th>Fee</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>{bookings.map(b=>(
+            <tr key={b.id}>
+              <td><strong>{b.client}</strong></td><td>{b.date}</td><td>{b.time}</td><td>{b.type}</td><td>{b.mode}</td>
+              <td><strong>{b.fee}</strong></td><td><Stt s={b.status}/></td>
+              <td><div className="tbl-acts">
+                {b.status==='Pending'&&<><button className="icon-btn" title="Approve" onClick={()=>setBookings(bookings.map(x=>x.id===b.id?{...x,status:'Confirmed'}:x))}>✅</button><button className="icon-btn del" title="Reject" onClick={()=>setBookings(bookings.map(x=>x.id===b.id?{...x,status:'Cancelled'}:x))}>❌</button></>}
+                <button className="icon-btn">👁️</button>
+              </div></td>
+            </tr>
+          ))}</tbody>
+        </table>
+      </div>
+    );
+
+    if(sec==='payments') return <>
+      <div className="stat-grid" style={{gridTemplateColumns:'repeat(3,1fr)'}}>
+        {[{i:'💰',v:'$4,700',l:'Revenue This Month'},{i:'⏳',v:'$360',l:'Pending Payments'},{i:'🔄',v:'$180',l:'Refunds Issued'}].map((s,i)=>(
+          <div key={i} className="stat-card"><div className="stat-icon">{s.i}</div><div className="stat-val">{s.v}</div><div className="stat-lbl">{s.l}</div></div>
+        ))}
+      </div>
+      <div className="dash-card">
+        <div className="dash-card-t">Invoice Management</div>
+        <table className="dtable">
+          <thead><tr><th>Invoice</th><th>Client</th><th>Date</th><th>Amount</th><th>Method</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>{PAYMENTS_D.map((p,i)=><tr key={i}><td><strong>{p.id}</strong></td><td>{p.client}</td><td>{p.date}</td><td><strong>{p.amount}</strong></td><td>{p.method}</td><td><Stt s={p.status}/></td><td><button className="abtn">📄 PDF</button></td></tr>)}</tbody>
+        </table>
+      </div>
+    </>;
+
+    if(sec==='availability') return (
+      <div className="dash-card">
+        <div className="dash-card-t">Availability Settings</div>
+        <p style={{fontSize:'0.82rem',color:'var(--text-soft)',marginBottom:'1.2rem'}}>Toggle which days you accept bookings.</p>
+        <div className="avail-grid" style={{marginBottom:'2rem'}}>
+          {DAYS_W.map((d,i)=>(
+            <div key={d} className={`avail-day${avail[i]?' on':''}`} onClick={()=>setAvail(avail.map((v,j)=>j===i?!v:v))}>
+              <div className="avail-d-name">{d}</div>
+              <div className={`avail-toggle${avail[i]?' on':''}`}><div className="avail-dot"/></div>
+            </div>
+          ))}
+        </div>
+        <div className="frow" style={{maxWidth:'480px'}}>
+          <div className="fg"><label className="fl">Start Time</label><select className="fs"><option>9:00 AM</option><option>8:00 AM</option></select></div>
+          <div className="fg"><label className="fl">End Time</label><select className="fs"><option>6:00 PM</option><option>5:00 PM</option></select></div>
+        </div>
+        <div className="fg" style={{maxWidth:'260px'}}>
+          <label className="fl">Session Duration</label>
+          <select className="fs"><option>50 minutes</option><option>60 minutes</option><option>80 minutes</option></select>
+        </div>
+        <button className="btn btn-dark" style={{marginTop:'0.5rem'}}>Save Availability</button>
+      </div>
+    );
+
+    if(sec==='cms') return <>
+      <div className="dash-card">
+        <div className="dash-card-t">Homepage Content</div>
+        <div className="fg"><label className="fl">Hero Headline</label><input className="fi" value={heroText} onChange={e=>setHeroText(e.target.value)}/></div>
+        <div className="fg"><label className="fl">Hero Subtext</label><textarea className="fta" style={{minHeight:'65px'}} defaultValue="Compassionate, trauma-informed counselling for relationships, anxiety, and personal growth."/></div>
+        <button className="btn btn-dark btn-sm">Save Changes</button>
+      </div>
+      <div className="dash-card">
+        <div className="dash-card-t">Blog Posts <button className="btn btn-rose btn-sm">+ New Post</button></div>
+        {cmsPosts.map((p,i)=>(
+          <div key={i} className="email-card">
+            <div><div className="email-t">{p.title}</div><div className="email-d">{p.cat} · {p.date}</div></div>
+            <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
+              <span className={`email-stat ${p.pub?'on':'off'}`}>{p.pub?'Published':'Draft'}</span>
+              <button className="icon-btn" onClick={()=>setCmsPosts(cmsPosts.map((x,j)=>j===i?{...x,pub:!x.pub}:x))}>{p.pub?'⏸':'▶'}</button>
+              <button className="icon-btn del" onClick={()=>setCmsPosts(cmsPosts.filter((_,j)=>j!==i))}>🗑️</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>;
+
+    if(sec==='comms') return <>
+      <div className="dash-card">
+        <div className="dash-card-t">Email Templates</div>
+        {emails.map((e,i)=>(
+          <div key={i} className="email-card">
+            <div><div className="email-t">{e.t}</div><div className="email-d">{e.d}</div></div>
+            <div style={{display:'flex',gap:'0.5rem',alignItems:'center'}}>
+              <span className={`email-stat ${e.on?'on':'off'}`}>{e.on?'Active':'Inactive'}</span>
+              <button className="icon-btn" onClick={()=>setEmails(emails.map((x,j)=>j===i?{...x,on:!x.on}:x))}>{e.on?'⏸':'▶'}</button>
+              <button className="icon-btn">✏️</button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="dash-card">
+        <div className="dash-card-t">Send Manual Email</div>
+        <div className="frow">
+          <div className="fg"><label className="fl">Recipient</label><select className="fs"><option>All Clients</option>{clients.map(c=><option key={c.id}>{c.name}</option>)}</select></div>
+          <div className="fg"><label className="fl">Subject</label><input className="fi" placeholder="Email subject..."/></div>
+        </div>
+        <div className="fg"><label className="fl">Message</label><textarea className="fta" placeholder="Write your message here..."/></div>
+        <button className="btn btn-dark">Send Email</button>
+      </div>
+    </>;
+  };
+
+  return (
+    <div className="dash-layout">
+      <div className="dash-sidebar admin-sb">
+        <div className="dash-logo">✦ Shine</div>
+        <div className="dash-role">Admin Panel</div>
+        {navItems.map(n=><button key={n.id} className={`dash-nav${sec===n.id?' act':''}`} onClick={()=>setSec(n.id)}><span>{n.i}</span>{n.l}</button>)}
+        <div style={{marginTop:'2rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+          <button className="dash-nav" onClick={()=>{setUser(null);setPage('home');}}><span>→</span>Sign Out</button>
+        </div>
+      </div>
+      <div className="dash-main">
+        <div className="dash-hdr"><div className="dash-greeting">Admin Dashboard 🔮</div><div className="dash-date">Tuesday, 17 March 2026</div></div>
+        {body()}
+      </div>
+    </div>
+  );
+}
+
+// ---- APP ----
+export default function App() {
+  const [loaded,setLoaded]=useState(false);
+  const [page,setPage]=useState('home');
+  const [user,setUser]=useState(null);
+  const [showAuth,setShowAuth]=useState(false);
+  const [toast,setToast]=useState(null);
+  const [dark,setDark]=useState(false);
+
+  useEffect(()=>{ const t=setTimeout(()=>setLoaded(true),1800); return()=>clearTimeout(t); },[]);
+
+  const showToast=(msg,type='success')=>setToast({msg,type});
+  const go=(p)=>{ setPage(p); };
+
+  const renderPage=()=>{
+    if(user?.role==='admin') return <AdminPanel user={user} setUser={setUser} setPage={go}/>;
+    if(user?.role==='client'&&page==='dashboard') return <ClientDashboard user={user} setPage={go} setUser={setUser}/>;
+    switch(page){
+      case 'home': return <HomePage setPage={go} setShowAuth={setShowAuth}/>;
+      case 'about': return <AboutPage setPage={go}/>;
+      case 'services': return <ServicesPage setPage={go}/>;
+      case 'booking': return <BookingPage setPage={go} showToast={showToast} user={user}/>;
+      case 'blog': return <BlogPage setPage={go}/>;
+      case 'contact': return <ContactPage setPage={go} showToast={showToast}/>;
+      default: return <HomePage setPage={go} setShowAuth={setShowAuth}/>;
+    }
+  };
+
+  const isDash=user&&(user.role==='admin'||(user.role==='client'&&page==='dashboard'));
+
+  return (
+    <div className={`shine-root${dark?' dark':''}`}>
+      <style>{css}</style>
+      <Loader done={loaded}/>
+      {!isDash && <Nav page={page} setPage={go} user={user} setShowAuth={setShowAuth} setUser={setUser}/>}
+      <main>{renderPage()}</main>
+      {showAuth && <AuthModal onClose={()=>setShowAuth(false)} onAuth={u=>{setUser(u);setPage('dashboard');showToast(`Welcome back, ${u.name}!`);}}/>}
+      {toast && <Toast msg={toast.msg} type={toast.type} onClose={()=>setToast(null)}/>}
+      <button className="dark-toggle" onClick={()=>setDark(!dark)} title="Toggle dark mode">{dark?'☀️':'🌙'}</button>
+    </div>
+  );
+}
